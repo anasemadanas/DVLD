@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|c:\\users\\d4rk\\source\\repos\\driving license management\\driving license management\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|solutionrelative:driving license management\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|c:\\users\\d4rk\\source\\repos\\driving license management\\driving license management\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|solutionrelative:driving license management\\form1.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|c:\\users\\d4rk\\source\\repos\\driving license management\\driving license management\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{92EDEBC5-DF75-4A4E-BB52-F466424CF9E7}|Driving License Management\\Driving License Management.csproj|solutionrelative:driving license management\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,48 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Program.cs",
-              "RelativeDocumentMoniker": "Driving License Management\\Program.cs",
-              "ToolTip": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Program.cs",
-              "RelativeToolTip": "Driving License Management\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T20:44:07.257Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.resx",
-              "DocumentMoniker": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Form1.resx",
-              "RelativeDocumentMoniker": "Driving License Management\\Form1.resx",
-              "ToolTip": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Form1.resx",
-              "RelativeToolTip": "Driving License Management\\Form1.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-05-05T20:44:05.73Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Form1.cs",
-              "RelativeDocumentMoniker": "Driving License Management\\Form1.cs",
-              "ToolTip": "C:\\Users\\D4RK\\source\\repos\\Driving License Management\\Driving License Management\\Form1.cs [Design]",
-              "RelativeToolTip": "Driving License Management\\Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-04T18:21:34.589Z",
-              "EditorCaption": " [Design]"
             }
           ]
         }
