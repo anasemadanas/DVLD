@@ -1,0 +1,85 @@
+# ============================
+# Python general
+# ============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+
+# ============================
+# Virtual Environment
+# ============================
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# ============================
+# IDEs & Editors
+# ============================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ============================
+# Logs
+# ============================
+*.log
+logs/
+debug.log
+
+# ============================
+# OS files
+# ============================
+.DS_Store
+Thumbs.db
+
+# ============================
+# SQLite Database Files
+# ============================
+*.sqlite
+*.sqlite3
+
+# ============================
+# PyQt / Tkinter GUI Artifacts
+# ============================
+*.pyqt-temp/
+*.qt-temp/
+*.ui~
+
+# ============================
+# Build / Distribution
+# ============================
+build/
+dist/
+.gradle/
+local.properties
+*.apk
+
+# ============================
+# Test & Coverage
+# ============================
+htmlcov/
+.coverage
+.coverage.*
+.cache/
+pytest_cache/
+
+# ============================
+# Backup Files
+# ============================
+*.bak
+*.tmp
+*.old
+*.backup
+
+# ============================
+# Generated Documentation
+# ============================
+docs/*.html
+docs/output/
