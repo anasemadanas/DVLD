@@ -1,0 +1,26 @@
+@startuml activity-international-license
+title International License Issuance - Activity Diagram
+
+start
+
+:Enter driver / license information;
+:Retrieve local license;
+
+if (License is Class 3?) then (Yes)
+  if (License is valid and not detained?) then (Yes)
+    if (Active international license exists?) then (Yes)
+      :Cancel existing active international license;
+    endif
+    :Pay international license fee;
+    :Issue new international license;
+    :Save international license record;
+    :Display confirmation;
+  else (No)
+    :Reject request;
+  endif
+else (No)
+  :Reject request;
+endif
+
+stop
+@enduml

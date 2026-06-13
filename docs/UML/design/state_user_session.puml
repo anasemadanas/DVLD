@@ -1,0 +1,21 @@
+@startuml state_user_session.puml
+title User Session State Diagram
+
+[*] --> LoggedOut
+
+LoggedOut --> Authenticating : Enter Credentials
+Authenticating --> LoggedIn : Valid Credentials
+Authenticating --> LoggedOut : Invalid Credentials
+
+LoggedIn --> Idle
+Idle --> PerformingOperation : Select Service
+PerformingOperation --> Idle : Operation Completed
+
+Idle --> SessionExpired : Timeout
+PerformingOperation --> SessionExpired : Timeout
+
+SessionExpired --> LoggedOut
+
+Idle --> LoggedOut : Logout
+
+@enduml

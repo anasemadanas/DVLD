@@ -1,0 +1,36 @@
+@startuml activity-license-issuance
+title First-Time License Issuance - Activity Diagram
+
+start
+
+:Enter applicant information;
+:Select license class;
+:Validate minimum age;
+:Check duplicate license class;
+:Check incomplete applications;
+
+if (Applicant eligible?) then (Yes)
+  :Schedule vision test;
+  if (Vision test passed?) then (Yes)
+    :Schedule written test;
+    if (Written test passed?) then (Yes)
+      :Schedule practical test;
+      if (Practical test passed?) then (Yes)
+        :Issue driving license;
+        :Create driver record if needed;
+        :Display confirmation;
+      else (No)
+        :Allow practical test retake;
+      endif
+    else (No)
+      :Allow written test retake;
+    endif
+  else (No)
+    :Allow vision test retake;
+  endif
+else (No)
+  :Reject application;
+endif
+
+stop
+@enduml

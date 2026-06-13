@@ -1,0 +1,30 @@
+@startuml module-interaction.puml
+title DVLD System - Module Interaction Diagram
+
+left to right direction
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+component "Person Management" as Person #E3F2FD
+component "Driver Management" as Driver #E3F2FD
+component "License Application\nManagement" as Application #FFF3E0
+component "Test Management" as Test #FFF3E0
+component "License Services" as License #E8F5E9
+component "License Detention\nManagement" as Detention #FCE4EC
+component "International License\nServices" as International #E8F5E9
+component "Audit Management" as Audit #F3E5F5
+
+Person --> Driver : creates driver record
+Person --> Application : applicant data
+Application --> Test : schedules tests
+Test --> License : passed tests
+License --> Driver : links licenses
+Detention --> License : validates license status
+International --> License : checks Class 3 license
+Application --> Audit : logs operations
+Test --> Audit : logs operations
+License --> Audit : logs operations
+Detention --> Audit : logs operations
+International --> Audit : logs operations
+
+@enduml

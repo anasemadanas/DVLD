@@ -1,0 +1,20 @@
+@startuml sequence-general-operation.puml
+title DVLD System - General Operation Sequence
+
+actor "Authorized User" as User
+boundary "DVLD UI" as UI
+control "Business Service" as Service
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+User -> UI : Submit request
+UI -> Service : Send request data
+Service -> Service : Validate input and business rules
+Service -> DAL : Request database operation
+DAL -> DB : Execute query / command
+DB --> DAL : Return result
+DAL --> Service : Return data
+Service --> UI : Return processed response
+UI --> User : Display result / confirmation
+
+@enduml

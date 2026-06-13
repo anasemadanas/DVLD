@@ -1,0 +1,29 @@
+@startuml component_architecture.puml
+title DVLD System - Component Architecture
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "DVLD Desktop Application" {
+
+  component "Authentication Component" as Auth
+  component "User Management Component" as UserComp
+  component "Application Management Component" as AppComp
+  component "License Services Component" as LicenseComp
+  component "Test Management Component" as TestComp
+  component "Detention Component" as DetentionComp
+  component "Reporting Component" as ReportComp
+
+}
+
+database "SQL Server Database" as DB
+
+Auth --> DB
+UserComp --> DB
+AppComp --> DB
+LicenseComp --> DB
+TestComp --> DB
+DetentionComp --> DB
+ReportComp --> DB
+
+@enduml

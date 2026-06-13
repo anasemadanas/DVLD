@@ -1,0 +1,75 @@
+@startuml system-architecture.puml
+title DVLD System - System Architecture
+
+left to right direction
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+skinparam package {
+  BorderColor #333333
+  BackgroundColor #F8F9FA
+}
+
+skinparam component {
+  BorderColor #333333
+}
+
+package "Presentation Layer" #E3F2FD {
+  component "Login UI" as LoginUI
+  component "Dashboard UI" as DashboardUI
+  component "Management Screens" as ManagementUI
+  component "License Services UI" as LicenseUI
+  component "Test Management UI" as TestUI
+}
+
+package "Business Layer" #FFF3E0 {
+  component "Authentication Service" as AuthService
+  component "User Service" as UserService
+  component "Person Service" as PersonService
+  component "Driver Service" as DriverService
+  component "Application Service" as AppService
+  component "License Service" as LicenseService
+  component "Test Service" as TestService
+  component "Validation Service" as ValidationService
+  component "Audit Service" as AuditService
+}
+
+package "Data Access Layer" #E8F5E9 {
+  component "User Repository" as UserRepo
+  component "Person Repository" as PersonRepo
+  component "Driver Repository" as DriverRepo
+  component "Application Repository" as AppRepo
+  component "License Repository" as LicenseRepo
+  component "Test Repository" as TestRepo
+  component "Audit Repository" as AuditRepo
+}
+
+database "SQL Server Database" as DB #FCE4EC
+
+LoginUI --> AuthService
+DashboardUI --> UserService
+ManagementUI --> PersonService
+ManagementUI --> DriverService
+LicenseUI --> AppService
+LicenseUI --> LicenseService
+TestUI --> TestService
+
+AuthService --> UserRepo
+UserService --> UserRepo
+PersonService --> PersonRepo
+DriverService --> DriverRepo
+AppService --> AppRepo
+LicenseService --> LicenseRepo
+TestService --> TestRepo
+ValidationService --> AppRepo
+AuditService --> AuditRepo
+
+UserRepo --> DB
+PersonRepo --> DB
+DriverRepo --> DB
+AppRepo --> DB
+LicenseRepo --> DB
+TestRepo --> DB
+AuditRepo --> DB
+
+@enduml

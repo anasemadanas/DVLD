@@ -1,0 +1,26 @@
+@startuml general-activity-diagram.puml
+title DVLD System - General Activity Diagram
+
+start
+
+:User logs into the system;
+:User selects required service;
+:User enters required data;
+:System validates input data;
+
+if (Input valid?) then (Yes)
+  :System checks business rules;
+  if (Business rules satisfied?) then (Yes)
+    :System processes the request;
+    :System updates database records;
+    :System records audit information;
+    :Display success confirmation;
+  else (No)
+    :Display business rule error;
+  endif
+else (No)
+  :Display validation error;
+endif
+
+stop
+@enduml

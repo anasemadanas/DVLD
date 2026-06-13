@@ -1,0 +1,66 @@
+@startuml database-schema
+title DVLD System - Database Schema
+
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam entityBackgroundColor #eef4fb
+skinparam entityBorderColor #3b4a5a
+
+skinparam database {
+    BackgroundColor<<DVLD>> LightYellow
+    BorderColor<<DVLD>> DarkBlue
+    FontColor<<DVLD>> DarkBlue
+}
+
+entity Persons {
+    * PersonID : INTEGER <<PK, AUTOINCREMENT>>
+    --
+    - NationalNo : TEXT <<UNIQUE>>
+    - Nationality : TEXT
+    - BirthDate : DATE
+    - FirstName : TEXT
+    - LastName : TEXT
+    - Email : TEXT   
+    - Phone : TEXT   
+    - Address : TEXT
+    - PersonPhoto : BLOB
+    --
+    # Userid : INTEGER <<FK>>
+    UNIQUE(Email, Phone)
+
+
+}
+
+entity Users {
+    * Userid : INTEGER <<PK, AUTOINCREMENT>>
+    --
+    - NationalID : TEXT <<UNIQUE>>
+    - Username : TEXT <<UNIQUE>>
+    - Password : TEXT
+    - FullName : TEXT
+    - permissions : INTEGER = 0
+    --
+    # PersonID : INTEGER <<FK>>
+
+}
+
+entity Licenses {
+    * LicenseID : INTEGER <<PK, AUTOINCREMENT>>
+    --
+    - LicenseKey : TEXT <<UNIQUE>>
+    - LicenseHolderPhoto : BLOB
+    - LicenseHolderNationalID : TEXT
+    - LicenseHolderName : TEXT
+    - LicenseHolderBirthDate : DATE
+    - LicenseClass : INTEGER
+    - IssuedDate : DATE
+    - ExpirationDate : DATE
+    - LicenseIssueStatus : TEXT
+    - LicenseConditions : TEXT
+    --
+    # PersonID : INTEGER <<FK>>
+}
+
+
+@enduml

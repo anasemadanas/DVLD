@@ -1,0 +1,172 @@
+@startuml dvld-erd.puml
+title DVLD System - Entity Relationship Diagram (ERD)
+
+skinparam shadowing false
+skinparam linetype ortho
+
+entity "Persons" as Persons {
+  * PersonID : int <<PK>>
+  --
+  NationalNumber : nvarchar(20) <<Unique>>
+  FirstName : nvarchar(50)
+  SecondName : nvarchar(50)
+  ThirdName : nvarchar(50)
+  LastName : nvarchar(50)
+  DateOfBirth : date
+  Address : nvarchar(200)
+  PhoneNumber : nvarchar(20)
+  Email : nvarchar(100)
+  Nationality : nvarchar(50)
+  PersonalPhoto : varbinary / path
+}
+
+entity "Users" as Users {
+  * UserID : int <<PK>>
+  --
+  PersonID : int <<FK>>
+  Username : nvarchar(50)
+  PasswordHash : nvarchar(255)
+  IsActive : bit
+}
+
+entity "Drivers" as Drivers {
+  * DriverID : int <<PK>>
+  --
+  PersonID : int <<FK>>
+  CreatedDate : datetime
+}
+
+entity "ApplicationTypes" as ApplicationTypes {
+  * ApplicationTypeID : int <<PK>>
+  --
+  ApplicationTypeName : nvarchar(100)
+  ApplicationFees : decimal
+}
+
+entity "Applications" as Applications {
+  * ApplicationID : int <<PK>>
+  --
+  PersonID : int <<FK>>
+  ApplicationTypeID : int <<FK>>
+  ApplicationDate : datetime
+  ApplicationStatus : nvarchar(20)
+  PaidFees : decimal
+  CreatedByUserID : int <<FK>>
+}
+
+entity "LicenseClasses" as LicenseClasses {
+  * LicenseClassID : int <<PK>>
+  --
+  ClassName : nvarchar(100)
+  ClassDescription : nvarchar(300)
+  MinimumAllowedAge : int
+  ValidityLength : int
+  ClassFees : decimal
+}
+
+entity "Licenses" as Licenses {
+  * LicenseID : int <<PK>>
+  --
+  DriverID : int <<FK>>
+  ApplicationID : int <<FK>>
+  LicenseClassID : int <<FK>>
+  LicenseNumber : nvarchar(50) <<Unique>>
+  IssueDate : datetime
+  ExpiryDate : datetime
+  Notes : nvarchar(300)
+  IssueReason : nvarchar(50)
+  IsActive : bit
+  CreatedByUserID : int <<FK>>
+}
+
+entity "TestTypes" as TestTypes {
+  * TestTypeID : int <<PK>>
+  --
+  TestTypeName : nvarchar(50)
+  TestFees : decimal
+}
+
+entity "TestAppointments" as TestAppointments {
+  * AppointmentID : int <<PK>>
+  --
+  ApplicationID : int <<FK>>
+  TestTypeID : int <<FK>>
+  AppointmentDate : datetime
+  PaidFees : decimal
+  CreatedByUserID : int <<FK>>
+}
+
+entity "Tests" as Tests {
+  * TestID : int <<PK>>
+  --
+  AppointmentID : int <<FK>>
+  TestResult : nvarchar(10)
+  Score : int
+  TestDate : datetime
+  Notes : nvarchar(300)
+  CreatedByUserID : int <<FK>>
+}
+
+entity "DetainedLicenses" as DetainedLicenses {
+  * DetentionID : int <<PK>>
+  --
+  LicenseID : int <<FK>>
+  DetentionDate : datetime
+  FineAmount : decimal
+  DetentionReason : nvarchar(300)
+  IsReleased : bit
+  ReleaseDate : datetime
+  CreatedByUserID : int <<FK>>
+  ReleasedByUserID : int <<FK>>
+}
+
+entity "InternationalLicenses" as InternationalLicenses {
+  * InternationalLicenseID : int <<PK>>
+  --
+  DriverID : int <<FK>>
+  LocalLicenseID : int <<FK>>
+  IssueDate : datetime
+  ExpiryDate : datetime
+  IsActive : bit
+  CreatedByUserID : int <<FK>>
+}
+
+entity "AuditLogs" as AuditLogs {
+  * AuditID : int <<PK>>
+  --
+  UserID : int <<FK>>
+  OperationName : nvarchar(100)
+  OperationDate : datetime
+  EntityName : nvarchar(100)
+  EntityID : int
+}
+
+Persons ||--o| Users : linked to
+Persons ||--o| Drivers : becomes
+Persons ||--o{ Applications : submits
+
+ApplicationTypes ||--o{ Applications : defines
+Users ||--o{ Applications : creates
+
+Drivers ||--o{ Licenses : holds
+Applications ||--o| Licenses : produces
+LicenseClasses ||--o{ Licenses : classifies
+Users ||--o{ Licenses : creates
+
+Applications ||--o{ TestAppointments : has
+TestTypes ||--o{ TestAppointments : defines
+Users ||--o{ TestAppointments : schedules
+
+TestAppointments ||--o| Tests : records
+Users ||--o{ Tests : records
+
+Licenses ||--o{ DetainedLicenses : may be detained
+Users ||--o{ DetainedLicenses : handles
+
+Drivers ||--o{ InternationalLicenses : holds
+Licenses ||--o{ InternationalLicenses : based on
+Users ||--o{ InternationalLicenses : creates
+
+Users ||--o{ AuditLogs : performs
+
+@enduml

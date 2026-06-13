@@ -1,0 +1,33 @@
+@startuml sequence-license-renewal.puml
+title License Renewal - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "LicenseService" as LicenseService
+control "TestService" as TestService
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+Employee -> UI : Submit renewal request
+UI -> LicenseService : Send license number
+LicenseService -> DAL : Retrieve license information
+DAL -> DB : Query license
+DB --> DAL : License data
+DAL --> LicenseService : License information
+
+LicenseService -> TestService : Verify vision test
+TestService -> DAL : Retrieve latest vision test result
+DAL -> DB : Query vision test
+DB --> DAL : Vision test result
+DAL --> TestService : Vision status
+
+alt Vision test passed and license surrendered
+  LicenseService -> DAL : Renew license
+  DAL -> DB : Update license / insert renewal record
+  DB --> DAL : Renewal saved
+  LicenseService --> UI : Display renewal confirmation
+else Requirement missing
+  LicenseService --> UI : Display renewal requirement message
+end
+
+@enduml

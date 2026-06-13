@@ -1,0 +1,107 @@
+@startuml system-diagram.puml
+title DVLD System - System Diagram
+
+left to right direction
+skinparam shadowing false
+
+skinparam rectangle {
+  RoundCorner 12
+  BorderColor #333333
+}
+
+skinparam package {
+  BorderColor #555555
+}
+
+actor "Administrator" as Admin
+actor "Licensing Employee" as Employee
+actor "Test Officer" as Officer
+actor "Applicant / Driver" as Applicant
+
+package "DVLD System" #E3F2FD {
+
+  rectangle "Authentication\n& Authorization" as Auth #BBDEFB
+
+  package "Core Management Modules" #FFF3E0 {
+    rectangle "User Management" as UserMgmt #FFE0B2
+    rectangle "Person Management" as PersonMgmt #FFE0B2
+    rectangle "Driver Management" as DriverMgmt #FFE0B2
+    rectangle "Application Management" as AppMgmt #FFE0B2
+  }
+
+  package "License Services" #E8F5E9 {
+    rectangle "License Issuance" as Issue #C8E6C9
+    rectangle "License Renewal" as Renewal #C8E6C9
+    rectangle "Lost / Damaged\nReplacement" as Replacement #C8E6C9
+    rectangle "International License" as International #C8E6C9
+    rectangle "License Detention\n& Release" as Detention #C8E6C9
+  }
+
+  package "Testing Services" #FCE4EC {
+    rectangle "Test Scheduling" as TestSchedule #F8BBD0
+    rectangle "Test Results" as TestResults #F8BBD0
+    rectangle "Retake Test" as Retake #F8BBD0
+  }
+
+  package "System Support" #F3E5F5 {
+    rectangle "Search / Inquiry" as Search #E1BEE7
+    rectangle "Audit Logging" as Audit #E1BEE7
+    rectangle "Reports" as Reports #E1BEE7
+  }
+}
+
+database "SQL Server Database" as DB #E0F2F1
+
+Admin --> Auth
+Employee --> Auth
+Officer --> Auth
+
+Admin --> UserMgmt
+Admin --> Reports
+
+Employee --> PersonMgmt
+Employee --> DriverMgmt
+Employee --> AppMgmt
+Employee --> Issue
+Employee --> Renewal
+Employee --> Replacement
+Employee --> International
+Employee --> Detention
+Employee --> Search
+
+Officer --> TestSchedule
+Officer --> TestResults
+Officer --> Retake
+
+Applicant --> Employee : submits requests
+
+Auth --> DB
+UserMgmt --> DB
+PersonMgmt --> DB
+DriverMgmt --> DB
+AppMgmt --> DB
+Issue --> DB
+Renewal --> DB
+Replacement --> DB
+International --> DB
+Detention --> DB
+TestSchedule --> DB
+TestResults --> DB
+Retake --> DB
+Search --> DB
+Audit --> DB
+Reports --> DB
+
+UserMgmt --> Audit
+PersonMgmt --> Audit
+AppMgmt --> Audit
+Issue --> Audit
+Renewal --> Audit
+Replacement --> Audit
+International --> Audit
+Detention --> Audit
+TestSchedule --> Audit
+TestResults --> Audit
+Retake --> Audit
+
+@enduml

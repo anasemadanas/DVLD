@@ -1,0 +1,54 @@
+@startuml architecture
+title DVLD System - 3 Tier Architecture
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+top to bottom direction
+
+package "Presentation Layer (GUI)" {
+
+  [Login Screen]
+  [User Management UI]
+  [License Services UI]
+  [Test Management UI]
+
+}
+
+package "Business Layer" {
+
+  [Authentication Service]
+  [User Service]
+  [License Service]
+  [Test Service]
+  [Validation Service]
+
+}
+
+package "Data Access Layer" {
+
+  [User Repository]
+  [License Repository]
+  [Test Repository]
+  [Application Repository]
+
+}
+
+database "SQL Server Database" as DB
+
+[Login Screen] --> [Authentication Service]
+[User Management UI] --> [User Service]
+[License Services UI] --> [License Service]
+[Test Management UI] --> [Test Service]
+
+[Authentication Service] --> [User Repository]
+[User Service] --> [User Repository]
+[License Service] --> [License Repository]
+[Test Service] --> [Test Repository]
+[Validation Service] --> [Application Repository]
+
+[User Repository] --> DB
+[License Repository] --> DB
+[Test Repository] --> DB
+[Application Repository] --> DB
+
+@enduml

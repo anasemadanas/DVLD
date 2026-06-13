@@ -1,0 +1,44 @@
+@startuml sequence-test-management.puml
+title Test Management - Sequence Diagram
+
+actor "Licensing Employee / Test Officer" as User
+boundary "DVLD UI" as UI
+control "TestService" as TestService
+control "ApplicationService" as ApplicationService
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+User -> UI : Select application and test type
+UI -> TestService : Request test appointment
+TestService -> ApplicationService : Validate application status
+ApplicationService -> DAL : Retrieve application data
+DAL -> DB : Query application
+DB --> DAL : Application data
+DAL --> ApplicationService : Application status
+
+alt Application valid
+  TestService -> DAL : Check existing appointment
+  DAL -> DB : Query active appointments
+  DB --> DAL : Appointment status
+
+  alt No duplicate appointment
+    TestService -> DAL : Save test appointment
+    DAL -> DB : Insert appointment
+    DB --> DAL : Appointment saved
+    TestService --> UI : Display appointment confirmation
+  else Appointment already exists
+    TestService --> UI : Display duplicate appointment error
+  end
+
+else Application invalid
+  TestService --> UI : Display invalid application message
+end
+
+User -> UI : Enter test result
+UI -> TestService : Submit result
+TestService -> DAL : Save test result
+DAL -> DB : Insert / update test result
+DB --> DAL : Result saved
+TestService --> UI : Display result confirmation
+
+@enduml

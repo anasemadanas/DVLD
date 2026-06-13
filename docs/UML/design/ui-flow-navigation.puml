@@ -1,0 +1,49 @@
+@startuml ui-flow-navigation.puml
+title DVLD System - UI Flow / Navigation
+
+left to right direction
+skinparam shadowing false
+
+skinparam rectangle {
+  RoundCorner 12
+  BorderColor #333333
+}
+
+rectangle "Login Screen" as Login #E3F2FD
+rectangle "Dashboard" as Dashboard #D6EAF8
+
+package "Management Modules" {
+
+rectangle "User Management" as UserMgmt #FFF3E0
+rectangle "Person Management" as PersonMgmt #FFF3E0
+rectangle "Driver Management" as DriverMgmt #FFF3E0
+rectangle "License Applications" as AppMgmt #FFF3E0
+
+}
+
+package "Service Modules" {
+
+rectangle "Test Management" as TestMgmt #E8F5E9
+rectangle "License Services" as LicenseServices #E8F5E9
+rectangle "Detained Licenses" as Detained #E8F5E9
+rectangle "International Licenses" as International #E8F5E9
+
+}
+
+rectangle "Search / Reports" as SearchReports #FCE4EC
+
+Login --> Dashboard
+
+Dashboard --> UserMgmt
+Dashboard --> PersonMgmt
+Dashboard --> DriverMgmt
+Dashboard --> AppMgmt
+
+Dashboard --> TestMgmt
+Dashboard --> LicenseServices
+Dashboard --> Detained
+Dashboard --> International
+
+Dashboard --> SearchReports
+
+@enduml

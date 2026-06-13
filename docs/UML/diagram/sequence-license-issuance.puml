@@ -1,0 +1,30 @@
+@startuml sequence-license-issuance
+title First-Time License Issuance - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "License Service" as LicenseService
+control "Validation Service" as Validation
+control "Test Service" as TestService
+database "SQL Server Database" as DB
+
+Employee -> UI : Create new license application
+UI -> LicenseService : Submit application data
+LicenseService -> Validation : Validate applicant eligibility
+Validation -> DB : Check age, license class, duplicate applications
+DB --> Validation : Validation result
+Validation --> LicenseService : Eligibility result
+
+alt Eligible applicant
+  LicenseService -> TestService : Check required tests
+  TestService -> DB : Verify vision, written, practical tests
+  DB --> TestService : All tests passed
+  TestService --> LicenseService : Tests passed
+  LicenseService -> DB : Create driving license
+  DB --> LicenseService : License created
+  LicenseService --> UI : Display issued license
+else Not eligible
+  LicenseService --> UI : Display validation error
+end
+
+@enduml

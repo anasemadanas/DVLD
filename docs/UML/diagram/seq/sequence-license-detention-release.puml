@@ -1,0 +1,38 @@
+@startuml sequence-license-detention-release.puml
+title License Detention and Release - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "DetentionService" as DetentionService
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+Employee -> UI : Enter license detention details
+UI -> DetentionService : Submit detention request
+DetentionService -> DAL : Validate license number
+DAL -> DB : Query license
+DB --> DAL : License found
+DAL --> DetentionService : License data
+
+DetentionService -> DAL : Save detention record
+DAL -> DB : Insert detention data
+DB --> DAL : Detention saved
+DetentionService --> UI : Display detention confirmation
+
+Employee -> UI : Request license release
+UI -> DetentionService : Submit release request
+DetentionService -> DAL : Retrieve detention record
+DAL -> DB : Query detention
+DB --> DAL : Detention data
+DAL --> DetentionService : Detention information
+
+alt Fine paid
+  DetentionService -> DAL : Update release date
+  DAL -> DB : Update detention record
+  DB --> DAL : Release saved
+  DetentionService --> UI : Display release confirmation
+else Fine not paid
+  DetentionService --> UI : Display fine payment required
+end
+
+@enduml

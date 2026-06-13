@@ -1,0 +1,20 @@
+@startuml general-sequence-diagram.puml
+title DVLD System - General Sequence Diagram
+
+actor "Authorized User" as User
+boundary "DVLD User Interface" as UI
+control "Business Layer" as BL
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+User -> UI : Submit request
+UI -> BL : Send request data
+BL -> BL : Validate input and business rules
+BL -> DAL : Request data operation
+DAL -> DB : Execute query / command
+DB --> DAL : Return data / result
+DAL --> BL : Return operation result
+BL --> UI : Return processed response
+UI --> User : Display result / confirmation
+
+@enduml

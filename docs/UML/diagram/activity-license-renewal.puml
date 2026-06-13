@@ -1,0 +1,25 @@
+@startuml activity-license-renewal
+title License Renewal - Activity Diagram
+
+start
+
+:Enter license number;
+:Retrieve license information;
+:Check license status;
+
+if (License expired?) then (Yes)
+  :Schedule vision test;
+  if (Vision test passed?) then (Yes)
+    :Surrender expired license;
+    :Pay renewal fees;
+    :Renew driving license;
+    :Display confirmation;
+  else (No)
+    :Reject renewal until vision test is passed;
+  endif
+else (No)
+  :Display license is not expired;
+endif
+
+stop
+@enduml

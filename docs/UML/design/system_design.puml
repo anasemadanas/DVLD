@@ -1,0 +1,42 @@
+@startuml system_design.puml
+title DVLD System Design Overview
+
+left to right direction
+skinparam shadowing false
+
+package "Presentation Layer" {
+  [Login Screen]
+  [Dashboard]
+  [Management Screens]
+  [License Services UI]
+}
+
+package "Business Layer" {
+  [User Service]
+  [Application Service]
+  [License Service]
+  [Test Service]
+  [Validation Service]
+}
+
+package "Data Access Layer" {
+  [Repositories]
+  [Database Access]
+}
+
+database "SQL Server Database" as DB
+
+[Login Screen] --> [User Service]
+[Dashboard] --> [Application Service]
+[Management Screens] --> [Validation Service]
+[License Services UI] --> [License Service]
+
+[User Service] --> [Repositories]
+[Application Service] --> [Repositories]
+[License Service] --> [Repositories]
+[Test Service] --> [Repositories]
+[Validation Service] --> [Repositories]
+
+[Repositories] --> DB
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml screen-flow
+title DVLD System - Screen Flow Diagram
+
+left to right direction
+skinparam shadowing false
+skinparam rectangle {
+  RoundCorner 12
+  BorderColor #333333
+}
+
+rectangle "Login Screen" as Login #E3F2FD
+rectangle "Dashboard" as Dashboard #D6EAF8
+rectangle "Service Module" as Module #FFF3E0
+rectangle "Service Form" as Form #FFF3E0
+rectangle "Validation" as Validation #FCE4EC
+rectangle "Processing" as Processing #E8F5E9
+rectangle "Confirmation / Result Screen" as Result #C8E6C9
+
+Login --> Dashboard
+Dashboard --> Module
+Module --> Form
+Form --> Validation
+Validation --> Processing : valid data
+Validation --> Form : invalid data
+Processing --> Result
+
+@enduml

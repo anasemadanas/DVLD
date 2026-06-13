@@ -1,0 +1,56 @@
+@startuml use-case-diagram
+title DVLD System - Use Case Diagram
+
+left to right direction
+skinparam shadowing false
+
+actor "Administrator" as Admin
+actor "Licensing Employee" as Employee
+actor "Test Officer" as Officer
+actor "Applicant / Driver" as Driver
+
+rectangle "DVLD System" {
+
+  usecase "Manage Users" as UC1
+  usecase "Manage Persons" as UC2
+  usecase "Manage Applications" as UC3
+  usecase "Schedule Tests" as UC4
+  usecase "Record Test Results" as UC5
+  usecase "Issue Driving License" as UC6
+  usecase "Renew Driving License" as UC7
+  usecase "Replace Lost License" as UC8
+  usecase "Replace Damaged License" as UC9
+  usecase "Detain License" as UC10
+  usecase "Release Detained License" as UC11
+  usecase "Issue International License" as UC12
+  usecase "Search Records" as UC13
+  usecase "Manage License Classes" as UC14
+  usecase "Manage Test Fees" as UC15
+}
+
+Admin --> UC1
+Admin --> UC14
+Admin --> UC15
+
+Employee --> UC2
+Employee --> UC3
+Employee --> UC4
+Employee --> UC6
+Employee --> UC7
+Employee --> UC8
+Employee --> UC9
+Employee --> UC10
+Employee --> UC11
+Employee --> UC12
+Employee --> UC13
+
+Officer --> UC4
+Officer --> UC5
+
+Driver --> UC6
+Driver --> UC7
+Driver --> UC8
+Driver --> UC9
+Driver --> UC12
+
+@enduml
