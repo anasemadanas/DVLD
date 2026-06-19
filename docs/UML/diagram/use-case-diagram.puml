@@ -7,50 +7,74 @@ skinparam shadowing false
 actor "Administrator" as Admin
 actor "Licensing Employee" as Employee
 actor "Test Officer" as Officer
-actor "Applicant / Driver" as Driver
+actor "Applicant / Driver" as Applicant
 
 rectangle "DVLD System" {
-
   usecase "Manage Users" as UC1
   usecase "Manage Persons" as UC2
-  usecase "Manage Applications" as UC3
-  usecase "Schedule Tests" as UC4
-  usecase "Record Test Results" as UC5
-  usecase "Issue Driving License" as UC6
-  usecase "Renew Driving License" as UC7
-  usecase "Replace Lost License" as UC8
-  usecase "Replace Damaged License" as UC9
-  usecase "Detain License" as UC10
-  usecase "Release Detained License" as UC11
-  usecase "Issue International License" as UC12
-  usecase "Search Records" as UC13
-  usecase "Manage License Classes" as UC14
-  usecase "Manage Test Fees" as UC15
+  usecase "Manage Drivers" as UC3
+  usecase "Manage Applications" as UC4
+  usecase "Manage Application Types" as UC5
+  usecase "Manage License Classes" as UC6
+  usecase "Manage Test Types / Test Fees" as UC7
+  usecase "Manage Reference Data" as UC19
+
+  usecase "Schedule Tests" as UC8
+  usecase "Record Test Results" as UC9
+
+  usecase "Issue Driving License" as UC10
+  usecase "Renew Driving License" as UC11
+  usecase "Replace Lost License" as UC12
+  usecase "Replace Damaged License" as UC13
+  usecase "Detain License" as UC14
+  usecase "Release Detained License" as UC15
+  usecase "Issue International License" as UC16
+
+  usecase "Search Records" as UC17
+  usecase "Record Audit Logs" as UC18
+  usecase "Generate Reports" as UC20
 }
 
 Admin --> UC1
-Admin --> UC14
-Admin --> UC15
+Admin --> UC5
+Admin --> UC6
+Admin --> UC7
+Admin --> UC19
+Admin --> UC20
 
 Employee --> UC2
 Employee --> UC3
 Employee --> UC4
-Employee --> UC6
-Employee --> UC7
 Employee --> UC8
-Employee --> UC9
 Employee --> UC10
 Employee --> UC11
 Employee --> UC12
 Employee --> UC13
+Employee --> UC14
+Employee --> UC15
+Employee --> UC16
+Employee --> UC17
+Employee --> UC20
 
-Officer --> UC4
-Officer --> UC5
+Officer --> UC8
+Officer --> UC9
 
-Driver --> UC6
-Driver --> UC7
-Driver --> UC8
-Driver --> UC9
-Driver --> UC12
+Applicant --> UC10
+Applicant --> UC11
+Applicant --> UC12
+Applicant --> UC13
+Applicant --> UC16
+
+UC10 --> UC18
+UC11 --> UC18
+UC12 --> UC18
+UC13 --> UC18
+UC14 --> UC18
+UC15 --> UC18
+UC16 --> UC18
+UC19 .> UC5 : <<include>>
+UC19 .> UC6 : <<include>>
+UC19 .> UC7 : <<include>>
+UC20 .> UC17 : <<include>>
 
 @enduml

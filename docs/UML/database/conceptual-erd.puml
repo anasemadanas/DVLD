@@ -1,0 +1,61 @@
+@startuml conceptual-erd
+title DVLD System - Conceptual ERD
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam entity {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+
+' High-level conceptual view:
+' - DVLD entities and relationships only
+' - No attributes, data types, PKs, or FKs
+
+entity "Countries" as Countries
+entity "People" as People
+entity "Users" as Users
+entity "Drivers" as Drivers
+entity "ApplicationTypes" as ApplicationTypes
+entity "Applications" as Applications
+entity "LicenseClasses" as LicenseClasses
+entity "LocalDrivingLicenseApplications" as LDLApplications
+entity "Licenses" as Licenses
+entity "InternationalLicenses" as InternationalLicenses
+entity "DetainedLicenses" as DetainedLicenses
+entity "TestTypes" as TestTypes
+entity "TestAppointments" as TestAppointments
+entity "Tests" as Tests
+
+Countries ||--o{ People : nationality
+People ||--o| Users : account
+People ||--o| Drivers : driver profile
+People ||--o{ Applications : submits
+
+ApplicationTypes ||--o{ Applications : classifies
+Applications ||--o| LDLApplications : local request
+LicenseClasses ||--o{ LDLApplications : requested class
+LicenseClasses ||--o{ Licenses : license class
+
+Drivers ||--o{ Licenses : holds
+Drivers ||--o{ InternationalLicenses : holds
+Applications ||--o{ Licenses : issues
+Applications ||--o{ InternationalLicenses : issues
+Licenses ||--o{ InternationalLicenses : local basis
+Licenses ||--o{ DetainedLicenses : detention history
+
+TestTypes ||--o{ TestAppointments : appointment type
+LDLApplications ||--o{ TestAppointments : schedules
+TestAppointments ||--o{ Tests : records
+
+Users ||--o{ Drivers : creates
+Users ||--o{ Applications : creates
+Users ||--o{ Licenses : creates
+Users ||--o{ InternationalLicenses : creates
+Users ||--o{ DetainedLicenses : creates
+Users ||--o{ TestAppointments : creates
+Users ||--o{ Tests : creates
+
+@enduml

@@ -1,0 +1,82 @@
+@startuml database-overview
+title DVLD System - Database Overview
+
+left to right direction
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam packageStyle rectangle
+skinparam package {
+  BackgroundColor #F8FAFC
+  BorderColor #475569
+  FontColor #111827
+}
+skinparam entity {
+  BackgroundColor #EEF4FB
+  BorderColor #334155
+  FontColor #111827
+}
+
+' High-level documentation view:
+' - Main database entity groups only
+' - No attributes, keys, or data types
+
+package "Identity & Reference Data" as Identity {
+  entity "Countries" as Countries
+  entity "People" as People
+}
+
+package "Application Processing" as ApplicationsGroup {
+  entity "ApplicationTypes" as ApplicationTypes
+  entity "Applications" as Applications
+  entity "LocalDrivingLicenseApplications" as LocalApplications
+}
+
+package "Driver & License Records" as LicenseRecords {
+  entity "Drivers" as Drivers
+  entity "LicenseClasses" as LicenseClasses
+  entity "Licenses" as Licenses
+  entity "InternationalLicenses" as InternationalLicenses
+  entity "DetainedLicenses" as DetainedLicenses
+}
+
+package "Testing" as Testing {
+  entity "TestTypes" as TestTypes
+  entity "TestAppointments" as TestAppointments
+  entity "Tests" as Tests
+}
+
+package "Audit / User Ownership" as Audit {
+  entity "Users" as Users
+}
+
+Countries ||--o{ People : nationality
+People ||--o| Users : account
+People ||--o| Drivers : may become
+People ||--o{ Applications : creates
+
+ApplicationTypes ||--o{ Applications : classifies
+Applications ||--o| LocalApplications : local license request
+LocalApplications }o--|| LicenseClasses : requested class
+
+Drivers ||--o{ Licenses : owns
+LicenseClasses ||--o{ Licenses : license class
+Applications ||--o{ Licenses : issues
+Applications ||--o{ InternationalLicenses : issues
+Applications ||--o{ DetainedLicenses : release request
+Drivers ||--o{ InternationalLicenses : owns
+Licenses ||--o{ InternationalLicenses : basis for
+Licenses ||--o{ DetainedLicenses : detention history
+
+LocalApplications ||--o{ TestAppointments : schedules
+TestTypes ||--o{ TestAppointments : defines
+TestAppointments ||--o{ Tests : produces
+
+Users ||--o{ Applications : creates
+Users ||--o{ Licenses : issues
+Users ||--o{ TestAppointments : schedules
+Users ||--o{ Tests : records
+Users ||--o{ DetainedLicenses : manages
+
+@enduml

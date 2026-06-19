@@ -1,0 +1,327 @@
+@startuml chen-notation-erd
+title DVLD System - Chen ERD
+
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam rectangle {
+  BackgroundColor #D9ECFF
+  BorderColor #1F4E79
+  FontColor #0B2545
+  FontStyle bold
+}
+skinparam usecase {
+  BackgroundColor #2F3437
+  BorderColor #111111
+  FontColor #FFFFFF
+}
+
+rectangle "Applications" as Applications #D9ECFF
+usecase "ApplicationID\nint" as Applications_ApplicationID #FFB347
+Applications -- Applications_ApplicationID
+usecase "ApplicantPersonID\nint" as Applications_ApplicantPersonID #B39DDB
+Applications -- Applications_ApplicantPersonID
+usecase "ApplicationDate\ndatetime" as Applications_ApplicationDate
+Applications -- Applications_ApplicationDate
+usecase "ApplicationTypeID\nint" as Applications_ApplicationTypeID #B39DDB
+Applications -- Applications_ApplicationTypeID
+usecase "ApplicationStatus\ntinyint" as Applications_ApplicationStatus
+Applications -- Applications_ApplicationStatus
+usecase "LastStatusDate\ndatetime" as Applications_LastStatusDate
+Applications -- Applications_LastStatusDate
+usecase "PaidFees\nsmallmoney" as Applications_PaidFees
+Applications -- Applications_PaidFees
+usecase "CreatedByUserID\nint" as Applications_CreatedByUserID #B39DDB
+Applications -- Applications_CreatedByUserID
+
+rectangle "ApplicationTypes" as ApplicationTypes #D9ECFF
+usecase "ApplicationTypeID\nint" as ApplicationTypes_ApplicationTypeID #FFB347
+ApplicationTypes -- ApplicationTypes_ApplicationTypeID
+usecase "ApplicationTypeTitle\nnvarchar(150)" as ApplicationTypes_ApplicationTypeTitle
+ApplicationTypes -- ApplicationTypes_ApplicationTypeTitle
+usecase "ApplicationFees\nsmallmoney" as ApplicationTypes_ApplicationFees
+ApplicationTypes -- ApplicationTypes_ApplicationFees
+
+rectangle "Countries" as Countries #D9ECFF
+usecase "CountryID\nint" as Countries_CountryID #FFB347
+Countries -- Countries_CountryID
+usecase "CountryName\nnvarchar(50)" as Countries_CountryName
+Countries -- Countries_CountryName
+
+rectangle "DetainedLicenses" as DetainedLicenses #D9ECFF
+usecase "DetainID\nint" as DetainedLicenses_DetainID #FFB347
+DetainedLicenses -- DetainedLicenses_DetainID
+usecase "LicenseID\nint" as DetainedLicenses_LicenseID #B39DDB
+DetainedLicenses -- DetainedLicenses_LicenseID
+usecase "DetainDate\nsmalldatetime" as DetainedLicenses_DetainDate
+DetainedLicenses -- DetainedLicenses_DetainDate
+usecase "FineFees\nsmallmoney" as DetainedLicenses_FineFees
+DetainedLicenses -- DetainedLicenses_FineFees
+usecase "CreatedByUserID\nint" as DetainedLicenses_CreatedByUserID #B39DDB
+DetainedLicenses -- DetainedLicenses_CreatedByUserID
+usecase "IsReleased\nbit" as DetainedLicenses_IsReleased
+DetainedLicenses -- DetainedLicenses_IsReleased
+usecase "ReleaseDate\nsmalldatetime" as DetainedLicenses_ReleaseDate
+DetainedLicenses -- DetainedLicenses_ReleaseDate
+usecase "ReleasedByUserID\nint" as DetainedLicenses_ReleasedByUserID #B39DDB
+DetainedLicenses -- DetainedLicenses_ReleasedByUserID
+usecase "ReleaseApplicationID\nint" as DetainedLicenses_ReleaseApplicationID #B39DDB
+DetainedLicenses -- DetainedLicenses_ReleaseApplicationID
+
+rectangle "Drivers" as Drivers #D9ECFF
+usecase "DriverID\nint" as Drivers_DriverID #FFB347
+Drivers -- Drivers_DriverID
+usecase "PersonID\nint" as Drivers_PersonID #B39DDB
+Drivers -- Drivers_PersonID
+usecase "CreatedByUserID\nint" as Drivers_CreatedByUserID #B39DDB
+Drivers -- Drivers_CreatedByUserID
+usecase "CreatedDate\nsmalldatetime" as Drivers_CreatedDate
+Drivers -- Drivers_CreatedDate
+
+rectangle "InternationalLicenses" as InternationalLicenses #D9ECFF
+usecase "InternationalLicenseID\nint" as InternationalLicenses_InternationalLicenseID #FFB347
+InternationalLicenses -- InternationalLicenses_InternationalLicenseID
+usecase "ApplicationID\nint" as InternationalLicenses_ApplicationID #B39DDB
+InternationalLicenses -- InternationalLicenses_ApplicationID
+usecase "DriverID\nint" as InternationalLicenses_DriverID #B39DDB
+InternationalLicenses -- InternationalLicenses_DriverID
+usecase "IssuedUsingLocalLicenseID\nint" as InternationalLicenses_IssuedUsingLocalLicenseID #B39DDB
+InternationalLicenses -- InternationalLicenses_IssuedUsingLocalLicenseID
+usecase "IssueDate\nsmalldatetime" as InternationalLicenses_IssueDate
+InternationalLicenses -- InternationalLicenses_IssueDate
+usecase "ExpirationDate\nsmalldatetime" as InternationalLicenses_ExpirationDate
+InternationalLicenses -- InternationalLicenses_ExpirationDate
+usecase "IsActive\nbit" as InternationalLicenses_IsActive
+InternationalLicenses -- InternationalLicenses_IsActive
+usecase "CreatedByUserID\nint" as InternationalLicenses_CreatedByUserID #B39DDB
+InternationalLicenses -- InternationalLicenses_CreatedByUserID
+
+rectangle "LicenseClasses" as LicenseClasses #D9ECFF
+usecase "LicenseClassID\nint" as LicenseClasses_LicenseClassID #FFB347
+LicenseClasses -- LicenseClasses_LicenseClassID
+usecase "ClassName\nnvarchar(50)" as LicenseClasses_ClassName
+LicenseClasses -- LicenseClasses_ClassName
+usecase "ClassDescription\nnvarchar(500)" as LicenseClasses_ClassDescription
+LicenseClasses -- LicenseClasses_ClassDescription
+usecase "MinimumAllowedAge\ntinyint" as LicenseClasses_MinimumAllowedAge
+LicenseClasses -- LicenseClasses_MinimumAllowedAge
+usecase "DefaultValidityLength\ntinyint" as LicenseClasses_DefaultValidityLength
+LicenseClasses -- LicenseClasses_DefaultValidityLength
+usecase "ClassFees\nsmallmoney" as LicenseClasses_ClassFees
+LicenseClasses -- LicenseClasses_ClassFees
+
+rectangle "Licenses" as Licenses #D9ECFF
+usecase "LicenseID\nint" as Licenses_LicenseID #FFB347
+Licenses -- Licenses_LicenseID
+usecase "ApplicationID\nint" as Licenses_ApplicationID #B39DDB
+Licenses -- Licenses_ApplicationID
+usecase "DriverID\nint" as Licenses_DriverID #B39DDB
+Licenses -- Licenses_DriverID
+usecase "LicenseClass\nint" as Licenses_LicenseClass #B39DDB
+Licenses -- Licenses_LicenseClass
+usecase "IssueDate\ndatetime" as Licenses_IssueDate
+Licenses -- Licenses_IssueDate
+usecase "ExpirationDate\ndatetime" as Licenses_ExpirationDate
+Licenses -- Licenses_ExpirationDate
+usecase "Notes\nnvarchar(500)" as Licenses_Notes
+Licenses -- Licenses_Notes
+usecase "PaidFees\nsmallmoney" as Licenses_PaidFees
+Licenses -- Licenses_PaidFees
+usecase "IsActive\nbit" as Licenses_IsActive
+Licenses -- Licenses_IsActive
+usecase "IssueReason\ntinyint" as Licenses_IssueReason
+Licenses -- Licenses_IssueReason
+usecase "CreatedByUserID\nint" as Licenses_CreatedByUserID #B39DDB
+Licenses -- Licenses_CreatedByUserID
+
+rectangle "LocalDrivingLicenseApplications" as LocalDrivingLicenseApplications #D9ECFF
+usecase "LocalDrivingLicenseApplicationID\nint" as LocalDrivingLicenseApplications_LocalDrivingLicenseApplicationID #FFB347
+LocalDrivingLicenseApplications -- LocalDrivingLicenseApplications_LocalDrivingLicenseApplicationID
+usecase "ApplicationID\nint" as LocalDrivingLicenseApplications_ApplicationID #B39DDB
+LocalDrivingLicenseApplications -- LocalDrivingLicenseApplications_ApplicationID
+usecase "LicenseClassID\nint" as LocalDrivingLicenseApplications_LicenseClassID #B39DDB
+LocalDrivingLicenseApplications -- LocalDrivingLicenseApplications_LicenseClassID
+
+rectangle "People" as People #D9ECFF
+usecase "PersonID\nint" as People_PersonID #FFB347
+People -- People_PersonID
+usecase "NationalNo\nnvarchar(20)" as People_NationalNo
+People -- People_NationalNo
+usecase "FirstName\nnvarchar(20)" as People_FirstName
+People -- People_FirstName
+usecase "SecondName\nnvarchar(20)" as People_SecondName
+People -- People_SecondName
+usecase "ThirdName\nnvarchar(20)" as People_ThirdName
+People -- People_ThirdName
+usecase "LastName\nnvarchar(20)" as People_LastName
+People -- People_LastName
+usecase "DateOfBirth\ndatetime" as People_DateOfBirth
+People -- People_DateOfBirth
+usecase "Gendor\ntinyint" as People_Gendor
+People -- People_Gendor
+usecase "Address\nnvarchar(500)" as People_Address
+People -- People_Address
+usecase "Phone\nnvarchar(20)" as People_Phone
+People -- People_Phone
+usecase "Email\nnvarchar(50)" as People_Email
+People -- People_Email
+usecase "NationalityCountryID\nint" as People_NationalityCountryID #B39DDB
+People -- People_NationalityCountryID
+usecase "ImagePath\nnvarchar(250)" as People_ImagePath
+People -- People_ImagePath
+
+rectangle "TestAppointments" as TestAppointments #D9ECFF
+usecase "TestAppointmentID\nint" as TestAppointments_TestAppointmentID #FFB347
+TestAppointments -- TestAppointments_TestAppointmentID
+usecase "TestTypeID\nint" as TestAppointments_TestTypeID #B39DDB
+TestAppointments -- TestAppointments_TestTypeID
+usecase "LocalDrivingLicenseApplicationID\nint" as TestAppointments_LocalDrivingLicenseApplicationID #B39DDB
+TestAppointments -- TestAppointments_LocalDrivingLicenseApplicationID
+usecase "AppointmentDate\nsmalldatetime" as TestAppointments_AppointmentDate
+TestAppointments -- TestAppointments_AppointmentDate
+usecase "PaidFees\nsmallmoney" as TestAppointments_PaidFees
+TestAppointments -- TestAppointments_PaidFees
+usecase "CreatedByUserID\nint" as TestAppointments_CreatedByUserID #B39DDB
+TestAppointments -- TestAppointments_CreatedByUserID
+usecase "IsLocked\nbit" as TestAppointments_IsLocked
+TestAppointments -- TestAppointments_IsLocked
+
+rectangle "Tests" as Tests #D9ECFF
+usecase "TestID\nint" as Tests_TestID #FFB347
+Tests -- Tests_TestID
+usecase "TestAppointmentID\nint" as Tests_TestAppointmentID #B39DDB
+Tests -- Tests_TestAppointmentID
+usecase "TestResult\nbit" as Tests_TestResult
+Tests -- Tests_TestResult
+usecase "Notes\nnvarchar(500)" as Tests_Notes
+Tests -- Tests_Notes
+usecase "CreatedByUserID\nint" as Tests_CreatedByUserID #B39DDB
+Tests -- Tests_CreatedByUserID
+
+rectangle "TestTypes" as TestTypes #D9ECFF
+usecase "TestTypeID\nint" as TestTypes_TestTypeID #FFB347
+TestTypes -- TestTypes_TestTypeID
+usecase "TestTypeTitle\nnvarchar(100)" as TestTypes_TestTypeTitle
+TestTypes -- TestTypes_TestTypeTitle
+usecase "TestTypeDescription\nnvarchar(500)" as TestTypes_TestTypeDescription
+TestTypes -- TestTypes_TestTypeDescription
+usecase "TestTypeFees\nsmallmoney" as TestTypes_TestTypeFees
+TestTypes -- TestTypes_TestTypeFees
+
+rectangle "Users" as Users #D9ECFF
+usecase "UserID\nint" as Users_UserID #FFB347
+Users -- Users_UserID
+usecase "PersonID\nint" as Users_PersonID #B39DDB
+Users -- Users_PersonID
+usecase "UserName\nnvarchar(20)" as Users_UserName
+Users -- Users_UserName
+usecase "Password\nnvarchar(20)" as Users_Password
+Users -- Users_Password
+usecase "IsActive\nbit" as Users_IsActive
+Users -- Users_IsActive
+
+rectangle "<>\nFK_Applications_ApplicationTypes" as R_FK_Applications_ApplicationTypes #8B3A2E
+ApplicationTypes -- R_FK_Applications_ApplicationTypes : 1
+R_FK_Applications_ApplicationTypes -- Applications : N
+
+rectangle "<>\nFK_Applications_People" as R_FK_Applications_People #8B3A2E
+People -- R_FK_Applications_People : 1
+R_FK_Applications_People -- Applications : N
+
+rectangle "<>\nFK_Applications_Users" as R_FK_Applications_Users #8B3A2E
+Users -- R_FK_Applications_Users : 1
+R_FK_Applications_Users -- Applications : N
+
+rectangle "<>\nFK_DetainedLicenses_Applications" as R_FK_DetainedLicenses_Applications #8B3A2E
+Applications -- R_FK_DetainedLicenses_Applications : 1
+R_FK_DetainedLicenses_Applications -- DetainedLicenses : N
+
+rectangle "<>\nFK_DetainedLicenses_Licenses" as R_FK_DetainedLicenses_Licenses #8B3A2E
+Licenses -- R_FK_DetainedLicenses_Licenses : 1
+R_FK_DetainedLicenses_Licenses -- DetainedLicenses : N
+
+rectangle "<>\nFK_DetainedLicenses_Users" as R_FK_DetainedLicenses_Users #8B3A2E
+Users -- R_FK_DetainedLicenses_Users : 1
+R_FK_DetainedLicenses_Users -- DetainedLicenses : N
+
+rectangle "<>\nFK_DetainedLicenses_Users1" as R_FK_DetainedLicenses_Users1 #8B3A2E
+Users -- R_FK_DetainedLicenses_Users1 : 1
+R_FK_DetainedLicenses_Users1 -- DetainedLicenses : N
+
+rectangle "<>\nFK_Drivers_People" as R_FK_Drivers_People #8B3A2E
+People -- R_FK_Drivers_People : 1
+R_FK_Drivers_People -- Drivers : N
+
+rectangle "<>\nFK_Drivers_Users" as R_FK_Drivers_Users #8B3A2E
+Users -- R_FK_Drivers_Users : 1
+R_FK_Drivers_Users -- Drivers : N
+
+rectangle "<>\nFK_InternationalLicenses_Applications" as R_FK_InternationalLicenses_Applications #8B3A2E
+Applications -- R_FK_InternationalLicenses_Applications : 1
+R_FK_InternationalLicenses_Applications -- InternationalLicenses : N
+
+rectangle "<>\nFK_InternationalLicenses_Drivers" as R_FK_InternationalLicenses_Drivers #8B3A2E
+Drivers -- R_FK_InternationalLicenses_Drivers : 1
+R_FK_InternationalLicenses_Drivers -- InternationalLicenses : N
+
+rectangle "<>\nFK_InternationalLicenses_Licenses" as R_FK_InternationalLicenses_Licenses #8B3A2E
+Licenses -- R_FK_InternationalLicenses_Licenses : 1
+R_FK_InternationalLicenses_Licenses -- InternationalLicenses : N
+
+rectangle "<>\nFK_InternationalLicenses_Users" as R_FK_InternationalLicenses_Users #8B3A2E
+Users -- R_FK_InternationalLicenses_Users : 1
+R_FK_InternationalLicenses_Users -- InternationalLicenses : N
+
+rectangle "<>\nFK_Licenses_Applications" as R_FK_Licenses_Applications #8B3A2E
+Applications -- R_FK_Licenses_Applications : 1
+R_FK_Licenses_Applications -- Licenses : N
+
+rectangle "<>\nFK_Licenses_Drivers" as R_FK_Licenses_Drivers #8B3A2E
+Drivers -- R_FK_Licenses_Drivers : 1
+R_FK_Licenses_Drivers -- Licenses : N
+
+rectangle "<>\nFK_Licenses_LicenseClasses" as R_FK_Licenses_LicenseClasses #8B3A2E
+LicenseClasses -- R_FK_Licenses_LicenseClasses : 1
+R_FK_Licenses_LicenseClasses -- Licenses : N
+
+rectangle "<>\nFK_Licenses_Users" as R_FK_Licenses_Users #8B3A2E
+Users -- R_FK_Licenses_Users : 1
+R_FK_Licenses_Users -- Licenses : N
+
+rectangle "<>\nFK_DrivingLicsenseApplications_Applications" as R_FK_DrivingLicsenseApplications_Applications #8B3A2E
+Applications -- R_FK_DrivingLicsenseApplications_Applications : 1
+R_FK_DrivingLicsenseApplications_Applications -- LocalDrivingLicenseApplications : N
+
+rectangle "<>\nFK_DrivingLicsenseApplications_LicenseClasses" as R_FK_DrivingLicsenseApplications_LicenseClasses #8B3A2E
+LicenseClasses -- R_FK_DrivingLicsenseApplications_LicenseClasses : 1
+R_FK_DrivingLicsenseApplications_LicenseClasses -- LocalDrivingLicenseApplications : N
+
+rectangle "<>\nFK_People_Countries1" as R_FK_People_Countries1 #8B3A2E
+Countries -- R_FK_People_Countries1 : 1
+R_FK_People_Countries1 -- People : N
+
+rectangle "<>\nFK_TestAppointments_LocalDrivingLicenseApplications" as R_FK_TestAppointments_LocalDrivingLicenseApplications #8B3A2E
+LocalDrivingLicenseApplications -- R_FK_TestAppointments_LocalDrivingLicenseApplications : 1
+R_FK_TestAppointments_LocalDrivingLicenseApplications -- TestAppointments : N
+
+rectangle "<>\nFK_TestAppointments_TestTypes" as R_FK_TestAppointments_TestTypes #8B3A2E
+TestTypes -- R_FK_TestAppointments_TestTypes : 1
+R_FK_TestAppointments_TestTypes -- TestAppointments : N
+
+rectangle "<>\nFK_TestAppointments_Users" as R_FK_TestAppointments_Users #8B3A2E
+Users -- R_FK_TestAppointments_Users : 1
+R_FK_TestAppointments_Users -- TestAppointments : N
+
+rectangle "<>\nFK_Tests_TestAppointments" as R_FK_Tests_TestAppointments #8B3A2E
+TestAppointments -- R_FK_Tests_TestAppointments : 1
+R_FK_Tests_TestAppointments -- Tests : N
+
+rectangle "<>\nFK_Tests_Users" as R_FK_Tests_Users #8B3A2E
+Users -- R_FK_Tests_Users : 1
+R_FK_Tests_Users -- Tests : N
+
+rectangle "<>\nFK_Users_People" as R_FK_Users_People #8B3A2E
+People -- R_FK_Users_People : 1
+R_FK_Users_People -- Users : N
+
+@enduml

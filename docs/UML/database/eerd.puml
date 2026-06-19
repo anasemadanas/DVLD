@@ -1,0 +1,223 @@
+@startuml eerd
+title DVLD System - Enhanced Entity Relationship Diagram (EERD)
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+skinparam entity {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+skinparam package {
+  BackgroundColor #FFFFFF
+  BorderColor #CBD5E1
+  FontColor #111827
+}
+
+' Enhanced ER model:
+' - Uses the same DVLD entities as dvld-erd.puml
+' - Adds role grouping and semantic notes without inventing subtype tables
+' - Keeps PK, FK, and business attributes visible
+
+package "Reference Data" {
+  entity "Countries\n<<Reference>>" as Countries {
+    * CountryID <<PK>>
+    --
+    CountryName
+  }
+
+  entity "ApplicationTypes\n<<Reference>>" as ApplicationTypes {
+    * ApplicationTypeID <<PK>>
+    --
+    ApplicationTypeTitle
+    ApplicationFees
+  }
+
+  entity "LicenseClasses\n<<Reference>>" as LicenseClasses {
+    * LicenseClassID <<PK>>
+    --
+    ClassName
+    ClassDescription
+    MinimumAllowedAge
+    ValidityLength
+    ClassFees
+  }
+
+  entity "TestTypes\n<<Reference>>" as TestTypes {
+    * TestTypeID <<PK>>
+    --
+    TestTypeName
+    TestTypeDescription
+    TestTypeFees
+  }
+}
+
+package "Identity and Access" {
+  entity "People\n<<Core Identity>>" as People {
+    * PersonID <<PK>>
+    --
+    NationalNo
+    FirstName
+    SecondName
+    ThirdName
+    LastName
+    DateOfBirth
+    Address
+    Gender
+    Phone
+    Email
+    CountryID <<FK>>
+    ImagePath
+  }
+
+  entity "Users\n<<Optional Role>>" as Users {
+    * UserID <<PK>>
+    --
+    PersonID <<FK>>
+    UserName
+    Password
+    IsActive
+  }
+
+  entity "Drivers\n<<Optional Role>>" as Drivers {
+    * DriverID <<PK>>
+    --
+    PersonID <<FK>>
+    CreatedByUserID <<FK>>
+    CreateDate
+  }
+}
+
+package "Applications and Testing" {
+  entity "Applications\n<<Transaction>>" as Applications {
+    * ApplicationID <<PK>>
+    --
+    PersonID <<FK>>
+    ApplicationTypeID <<FK>>
+    ApplicationStatus
+    ApplicationDate
+    PaidFees
+    LastStatusDate
+    CreatedByUserID <<FK>>
+  }
+
+  entity "LocalDrivingLicenseApplications\n<<Application Detail>>" as LDLApplications {
+    * LocalDrivingLicenseApplicationID <<PK>>
+    --
+    ApplicationID <<FK>>
+    LicenseClassID <<FK>>
+  }
+
+  entity "TestAppointments\n<<Workflow Event>>" as TestAppointments {
+    * TestAppointmentID <<PK>>
+    --
+    TestTypeID <<FK>>
+    LocalDrivingLicenseApplicationID <<FK>>
+    AppointmentDate
+    PaidFees
+    CreatedByUserID <<FK>>
+    IsLocked
+  }
+
+  entity "Tests\n<<Workflow Result>>" as Tests {
+    * TestID <<PK>>
+    --
+    TestAppointmentID <<FK>>
+    TestResult
+    Notes
+    CreatedByUserID <<FK>>
+  }
+}
+
+package "Licensing and Enforcement" {
+  entity "Licenses\n<<Credential>>" as Licenses {
+    * LicenseID <<PK>>
+    --
+    ApplicationID <<FK>>
+    DriverID <<FK>>
+    LicenseClassID <<FK>>
+    IssueDate
+    ExpirationDate
+    Notes
+    IssueReason
+    CreatedByUserID <<FK>>
+  }
+
+  entity "InternationalLicenses\n<<Credential Extension>>" as InternationalLicenses {
+    * InternationalLicenseID <<PK>>
+    --
+    ApplicationID <<FK>>
+    DriverID <<FK>>
+    IssuedUsingLocalLicenseID <<FK>>
+    IssueDate
+    ExpirationDate
+    IsActive
+    CreatedByUserID <<FK>>
+  }
+
+  entity "DetainedLicenses\n<<Enforcement Event>>" as DetainedLicenses {
+    * DetainID <<PK>>
+    --
+    ReleaseApplicationID <<FK>>
+    LicenseID <<FK>>
+    DetainDate
+    FineFees
+    CreatedByUserID <<FK>>
+    IsReleased
+    ReleaseDate
+    ReleasedByUserID <<FK>>
+  }
+}
+
+Countries ||--o{ People : nationality
+People ||--o| Users : optional account role
+People ||--o| Drivers : optional driver role
+People ||--o{ Applications : applicant
+
+ApplicationTypes ||--o{ Applications : workflow type
+Applications ||--o| LDLApplications : local-license detail
+
+LicenseClasses ||--o{ LDLApplications : requested class
+LicenseClasses ||--o{ Licenses : issued class
+
+Drivers ||--o{ Licenses : holds
+Drivers ||--o{ InternationalLicenses : holds
+
+Applications ||--o{ Licenses : source application
+Applications ||--o{ InternationalLicenses : source application
+
+Licenses ||--o{ DetainedLicenses : enforcement history
+Licenses ||--o{ InternationalLicenses : local-license basis
+
+TestTypes ||--o{ TestAppointments : appointment type
+LDLApplications ||--o{ TestAppointments : required tests
+TestAppointments ||--o{ Tests : test records
+
+Users ||--o{ Drivers : creates
+Users ||--o{ Applications : creates
+Users ||--o{ Licenses : creates
+Users ||--o{ InternationalLicenses : creates
+Users ||--o{ DetainedLicenses : creates
+Users ||--o{ Tests : creates
+Users ||--o{ TestAppointments : creates
+
+note right of People
+  EER role constraint:
+  a person can optionally be represented
+  as one user, one driver, or both.
+end note
+
+note right of LDLApplications
+  Application specialization is modeled
+  by the existing detail table rather than
+  separate invented subtype entities.
+end note
+
+note right of InternationalLicenses
+  International licenses extend an issued
+  local license through IssuedUsingLocalLicenseID.
+end note
+
+@enduml

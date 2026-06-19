@@ -1,0 +1,37 @@
+@startuml license-state-diagram
+title DVLD License Lifecycle - State Diagram
+
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam state {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+
+[*] --> Active : Issue License
+
+Active --> Expired : Expire License
+Active --> Detained : Detain License
+Active --> Replaced : Replace Lost/Damaged License
+Active --> Inactive : Deactivate License
+
+Expired --> Renewed : Renew License
+Renewed --> Active : Activate Renewed License
+
+Detained --> Released : Release License
+Released --> Active : Restore Active Status
+
+Replaced --> Inactive : Deactivate Replaced License
+Expired --> Inactive : Deactivate License
+Detained --> Inactive : Deactivate License
+
+Inactive --> [*]
+
+note right of Active
+Only active licenses should be used for
+valid driving privileges, replacement,
+international-license checks, and detention.
+end note
+
+@enduml

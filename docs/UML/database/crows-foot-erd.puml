@@ -1,0 +1,200 @@
+@startuml crows-foot-erd
+title DVLD System - Crow's Foot ERD
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+skinparam entity {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+
+' Crow's Foot focus:
+' || mandatory one
+' o| optional one
+' o{ zero or many
+
+entity "People" as People {
+  * PersonID <<PK>>
+  --
+  NationalNo
+  FirstName
+  SecondName
+  ThirdName
+  LastName
+  DateOfBirth
+  Address
+  Gender
+  Phone
+  Email
+  CountryID <<FK>>
+  ImagePath
+}
+
+entity "Countries" as Countries {
+  * CountryID <<PK>>
+  --
+  CountryName
+}
+
+entity "Users" as Users {
+  * UserID <<PK>>
+  --
+  PersonID <<FK>>
+  UserName
+  Password
+  IsActive
+}
+
+entity "Drivers" as Drivers {
+  * DriverID <<PK>>
+  --
+  PersonID <<FK>>
+  CreatedByUserID <<FK>>
+  CreateDate
+}
+
+entity "ApplicationTypes" as ApplicationTypes {
+  * ApplicationTypeID <<PK>>
+  --
+  ApplicationTypeTitle
+  ApplicationFees
+}
+
+entity "Applications" as Applications {
+  * ApplicationID <<PK>>
+  --
+  PersonID <<FK>>
+  ApplicationTypeID <<FK>>
+  ApplicationStatus
+  ApplicationDate
+  PaidFees
+  LastStatusDate
+  CreatedByUserID <<FK>>
+}
+
+entity "LicenseClasses" as LicenseClasses {
+  * LicenseClassID <<PK>>
+  --
+  ClassName
+  ClassDescription
+  MinimumAllowedAge
+  ValidityLength
+  ClassFees
+}
+
+entity "LocalDrivingLicenseApplications" as LDLApplications {
+  * LocalDrivingLicenseApplicationID <<PK>>
+  --
+  ApplicationID <<FK>>
+  LicenseClassID <<FK>>
+}
+
+entity "Licenses" as Licenses {
+  * LicenseID <<PK>>
+  --
+  ApplicationID <<FK>>
+  DriverID <<FK>>
+  LicenseClassID <<FK>>
+  IssueDate
+  ExpirationDate
+  Notes
+  IssueReason
+  CreatedByUserID <<FK>>
+}
+
+entity "InternationalLicenses" as InternationalLicenses {
+  * InternationalLicenseID <<PK>>
+  --
+  ApplicationID <<FK>>
+  DriverID <<FK>>
+  IssuedUsingLocalLicenseID <<FK>>
+  IssueDate
+  ExpirationDate
+  IsActive
+  CreatedByUserID <<FK>>
+}
+
+entity "DetainedLicenses" as DetainedLicenses {
+  * DetainID <<PK>>
+  --
+  ReleaseApplicationID <<FK>>
+  LicenseID <<FK>>
+  DetainDate
+  FineFees
+  CreatedByUserID <<FK>>
+  IsReleased
+  ReleaseDate
+  ReleasedByUserID <<FK>>
+}
+
+entity "TestTypes" as TestTypes {
+  * TestTypeID <<PK>>
+  --
+  TestTypeName
+  TestTypeDescription
+  TestTypeFees
+}
+
+entity "TestAppointments" as TestAppointments {
+  * TestAppointmentID <<PK>>
+  --
+  TestTypeID <<FK>>
+  LocalDrivingLicenseApplicationID <<FK>>
+  AppointmentDate
+  PaidFees
+  CreatedByUserID <<FK>>
+  IsLocked
+}
+
+entity "Tests" as Tests {
+  * TestID <<PK>>
+  --
+  TestAppointmentID <<FK>>
+  TestResult
+  Notes
+  CreatedByUserID <<FK>>
+}
+
+Countries ||--o{ People : "country has people"
+People ||--o| Users : "person may have user"
+People ||--o| Drivers : "person may be driver"
+People ||--o{ Applications : "person submits"
+
+ApplicationTypes ||--o{ Applications : "type classifies"
+Applications ||--o| LDLApplications : "application may be local"
+
+LicenseClasses ||--o{ LDLApplications : "class requested"
+LicenseClasses ||--o{ Licenses : "class assigned"
+
+Drivers ||--o{ Licenses : "driver holds"
+Drivers ||--o{ InternationalLicenses : "driver holds"
+
+Applications ||--o{ Licenses : "application issues"
+Applications ||--o{ InternationalLicenses : "application issues"
+
+Licenses ||--o{ DetainedLicenses : "license detained"
+Licenses ||--o{ InternationalLicenses : "local basis"
+
+TestTypes ||--o{ TestAppointments : "test type"
+LDLApplications ||--o{ TestAppointments : "application schedules"
+TestAppointments ||--o{ Tests : "appointment records"
+
+Users ||--o{ Drivers : "creates"
+Users ||--o{ Applications : "creates"
+Users ||--o{ Licenses : "creates"
+Users ||--o{ InternationalLicenses : "creates"
+Users ||--o{ DetainedLicenses : "creates"
+Users ||--o{ Tests : "creates"
+Users ||--o{ TestAppointments : "creates"
+
+legend right
+  |= Symbol |= Meaning |
+  | || | exactly one |
+  | o| | zero or one |
+  | o{ | zero or many |
+endlegend
+
+@enduml

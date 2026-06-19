@@ -1,54 +1,132 @@
 @startuml architecture
-title DVLD System - 3 Tier Architecture
+title DVLD System - High-Level Enterprise Architecture
 
-skinparam componentStyle rectangle
-skinparam shadowing false
 top to bottom direction
 
-package "Presentation Layer (GUI)" {
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam nodesep 55
+skinparam ranksep 50
 
-  [Login Screen]
-  [User Management UI]
-  [License Services UI]
-  [Test Management UI]
-
+skinparam package {
+  BorderColor #334155
+  FontColor #0F172A
+  FontStyle bold
+}
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #475569
+  FontColor #111827
+}
+skinparam database {
+  BackgroundColor #FCE7F3
+  BorderColor #9D174D
+  FontColor #111827
 }
 
-package "Business Layer" {
+actor "Administrator" as Administrator
+actor "Licensing Employee" as LicensingEmployee
+actor "Test Officer" as TestOfficer
 
-  [Authentication Service]
-  [User Service]
-  [License Service]
-  [Test Service]
-  [Validation Service]
-
+package "Presentation Layer" #E0F2FE {
+  component "DVLD Desktop UI" as DesktopUI
+  component "Login & Dashboard" as LoginDashboard
+  component "Operational Screens" as OperationalScreens
+  component "Search & Reports" as SearchReports
 }
 
-package "Data Access Layer" {
-
-  [User Repository]
-  [License Repository]
-  [Test Repository]
-  [Application Repository]
-
+package "Business Layer" #FEF3C7 {
+  component "AuthenticationService" as AuthenticationService
+  component "UserService" as UserService
+  component "PersonService" as PersonService
+  component "ApplicationService" as ApplicationService
+  component "LicenseService" as LicenseService
+  component "TestService" as TestService
+  component "ValidationService" as ValidationService
+  component "AuditService" as AuditService
+  component "DriverService" as DriverService
+  component "CountryService" as CountryService
+  component "ApplicationTypeService" as ApplicationTypeService
+  component "LicenseClassService" as LicenseClassService
+  component "TestTypeService" as TestTypeService
+  component "DetentionService" as DetentionService
+  component "InternationalLicenseService" as InternationalLicenseService
 }
 
-database "SQL Server Database" as DB
+package "Data Access Layer" #DCFCE7 {
+  component "Repository Interfaces" as RepositoryInterfaces
+  component "SQL Repository Implementations" as RepositoryImplementations
+}
 
-[Login Screen] --> [Authentication Service]
-[User Management UI] --> [User Service]
-[License Services UI] --> [License Service]
-[Test Management UI] --> [Test Service]
+package "Database Layer" #FCE7F3 {
+  database "SQL Server\nDVLD Database" as SqlServer
+}
 
-[Authentication Service] --> [User Repository]
-[User Service] --> [User Repository]
-[License Service] --> [License Repository]
-[Test Service] --> [Test Repository]
-[Validation Service] --> [Application Repository]
+Administrator --> DesktopUI
+LicensingEmployee --> DesktopUI
+TestOfficer --> DesktopUI
 
-[User Repository] --> DB
-[License Repository] --> DB
-[Test Repository] --> DB
-[Application Repository] --> DB
+DesktopUI --> LoginDashboard
+DesktopUI --> OperationalScreens
+DesktopUI --> SearchReports
+
+LoginDashboard --> AuthenticationService
+OperationalScreens --> ApplicationService
+OperationalScreens --> PersonService
+OperationalScreens --> LicenseService
+OperationalScreens --> TestService
+OperationalScreens --> DriverService
+OperationalScreens --> DetentionService
+OperationalScreens --> InternationalLicenseService
+SearchReports --> ApplicationService
+SearchReports --> LicenseService
+
+AuthenticationService --> UserService
+PersonService --> ValidationService
+ApplicationService --> ValidationService
+LicenseService --> ValidationService
+TestService --> ValidationService
+DriverService --> ValidationService
+DetentionService --> ValidationService
+InternationalLicenseService --> ValidationService
+ApplicationService --> ApplicationTypeService
+ApplicationService --> LicenseClassService
+TestService --> TestTypeService
+
+UserService --> AuditService
+PersonService --> AuditService
+ApplicationService --> AuditService
+LicenseService --> AuditService
+TestService --> AuditService
+DriverService --> AuditService
+DetentionService --> AuditService
+InternationalLicenseService --> AuditService
+
+AuthenticationService --> RepositoryInterfaces
+UserService --> RepositoryInterfaces
+PersonService --> RepositoryInterfaces
+ApplicationService --> RepositoryInterfaces
+LicenseService --> RepositoryInterfaces
+TestService --> RepositoryInterfaces
+ValidationService --> RepositoryInterfaces
+AuditService --> RepositoryInterfaces
+DriverService --> RepositoryInterfaces
+CountryService --> RepositoryInterfaces
+ApplicationTypeService --> RepositoryInterfaces
+LicenseClassService --> RepositoryInterfaces
+TestTypeService --> RepositoryInterfaces
+DetentionService --> RepositoryInterfaces
+InternationalLicenseService --> RepositoryInterfaces
+
+RepositoryInterfaces --> RepositoryImplementations
+RepositoryImplementations --> SqlServer
+
+note right of ValidationService
+Centralizes DVLD business rules:
+eligibility, duplicate checks,
+license status, and test order.
+end note
 
 @enduml

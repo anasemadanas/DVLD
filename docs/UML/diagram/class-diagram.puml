@@ -1,8 +1,15 @@
 @startuml class-diagram
-title DVLD System - Class Diagram
+title DVLD System - Conceptual Domain Model
 
 skinparam classAttributeIconSize 0
 skinparam shadowing false
+
+note as ConceptualModelNote
+This diagram is a conceptual domain model for business understanding.
+It is not the physical database model and is not intended to mirror script.sql
+table names, column names, SQL Server data types, or enforced constraints.
+Use docs/UML/database/*-erd.puml and script.sql for the SQL-backed model.
+end note
 
 class Person {
   +PersonID: int

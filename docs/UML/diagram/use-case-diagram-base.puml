@@ -25,10 +25,11 @@ rectangle "DVLD System" {
   usecase "Issue International License" as UC12
   usecase "Search Records" as UC13
   usecase "Manage License Classes" as UC14
-  usecase "Manage Test Types" as UC15
+  usecase "Manage Test Types / Test Fees" as UC15
   usecase "Manage Drivers" as UC16
   usecase "Generate Reports" as UC17
   usecase "Login / Logout" as UC18
+  usecase "Manage Reference Data" as UC19
 }
 
 Admin --> UC1
@@ -36,6 +37,7 @@ Admin --> UC14
 Admin --> UC15
 Admin --> UC17
 Admin --> UC18
+Admin --> UC19
 
 Employee --> UC2
 Employee --> UC3
@@ -66,5 +68,8 @@ UC7 .> UC4 : <<include>>
 UC12 .> UC13 : <<include>>
 UC10 .> UC13 : <<include>>
 UC11 .> UC10 : <<extend>>
+UC19 .> UC14 : <<include>>
+UC19 .> UC15 : <<include>>
+UC17 .> UC13 : <<include>>
 
 @enduml

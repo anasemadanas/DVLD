@@ -1,75 +1,125 @@
-@startuml system-architecture.puml
-title DVLD System - System Architecture
+@startuml system-architecture
+title DVLD System - System Interaction Architecture
 
-left to right direction
+top to bottom direction
+
 skinparam shadowing false
 skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam nodesep 55
+skinparam ranksep 45
 
+skinparam actor {
+  BorderColor #334155
+  FontColor #111827
+}
 skinparam package {
-  BorderColor #333333
-  BackgroundColor #F8F9FA
+  BorderColor #334155
+  FontColor #0F172A
+  FontStyle bold
 }
-
 skinparam component {
-  BorderColor #333333
+  BackgroundColor #FFFFFF
+  BorderColor #475569
+  FontColor #111827
+}
+skinparam database {
+  BackgroundColor #FCE7F3
+  BorderColor #9D174D
 }
 
-package "Presentation Layer" #E3F2FD {
-  component "Login UI" as LoginUI
-  component "Dashboard UI" as DashboardUI
-  component "Management Screens" as ManagementUI
-  component "License Services UI" as LicenseUI
-  component "Test Management UI" as TestUI
+actor "Administrator" as Administrator
+actor "Licensing Employee" as LicensingEmployee
+actor "Test Officer" as TestOfficer
+
+package "DVLD Desktop Client" #E0F2FE {
+  component "Secure Login" as SecureLogin
+  component "Dashboard Navigation" as Dashboard
+  component "Business Workflow Screens" as WorkflowScreens
 }
 
-package "Business Layer" #FFF3E0 {
-  component "Authentication Service" as AuthService
-  component "User Service" as UserService
-  component "Person Service" as PersonService
-  component "Driver Service" as DriverService
-  component "Application Service" as AppService
-  component "License Service" as LicenseService
-  component "Test Service" as TestService
-  component "Validation Service" as ValidationService
-  component "Audit Service" as AuditService
+package "Business Service Layer" #FEF3C7 {
+  component "AuthenticationService" as AuthenticationService
+  component "UserService" as UserService
+  component "PersonService" as PersonService
+  component "ApplicationService" as ApplicationService
+  component "LicenseService" as LicenseService
+  component "TestService" as TestService
+  component "ValidationService" as ValidationService
+  component "AuditService" as AuditService
+  component "DriverService" as DriverService
+  component "CountryService" as CountryService
+  component "ApplicationTypeService" as ApplicationTypeService
+  component "LicenseClassService" as LicenseClassService
+  component "TestTypeService" as TestTypeService
+  component "DetentionService" as DetentionService
+  component "InternationalLicenseService" as InternationalLicenseService
 }
 
-package "Data Access Layer" #E8F5E9 {
-  component "User Repository" as UserRepo
-  component "Person Repository" as PersonRepo
-  component "Driver Repository" as DriverRepo
-  component "Application Repository" as AppRepo
-  component "License Repository" as LicenseRepo
-  component "Test Repository" as TestRepo
-  component "Audit Repository" as AuditRepo
+package "Data Access and Storage" #DCFCE7 {
+  component "Repository Layer" as RepositoryLayer
+  database "SQL Server\nDVLD Database" as SqlServer
 }
 
-database "SQL Server Database" as DB #FCE4EC
+Administrator --> SecureLogin
+LicensingEmployee --> SecureLogin
+TestOfficer --> SecureLogin
 
-LoginUI --> AuthService
-DashboardUI --> UserService
-ManagementUI --> PersonService
-ManagementUI --> DriverService
-LicenseUI --> AppService
-LicenseUI --> LicenseService
-TestUI --> TestService
+SecureLogin --> AuthenticationService
+AuthenticationService --> UserService
+UserService --> Dashboard
+Dashboard --> WorkflowScreens
 
-AuthService --> UserRepo
-UserService --> UserRepo
-PersonService --> PersonRepo
-DriverService --> DriverRepo
-AppService --> AppRepo
-LicenseService --> LicenseRepo
-TestService --> TestRepo
-ValidationService --> AppRepo
-AuditService --> AuditRepo
+WorkflowScreens --> ApplicationService
+WorkflowScreens --> PersonService
+WorkflowScreens --> LicenseService
+WorkflowScreens --> TestService
+WorkflowScreens --> DriverService
+WorkflowScreens --> DetentionService
+WorkflowScreens --> InternationalLicenseService
 
-UserRepo --> DB
-PersonRepo --> DB
-DriverRepo --> DB
-AppRepo --> DB
-LicenseRepo --> DB
-TestRepo --> DB
-AuditRepo --> DB
+ApplicationService --> ValidationService
+PersonService --> ValidationService
+LicenseService --> ValidationService
+TestService --> ValidationService
+DriverService --> ValidationService
+DetentionService --> ValidationService
+InternationalLicenseService --> ValidationService
+ApplicationService --> ApplicationTypeService
+ApplicationService --> LicenseClassService
+TestService --> TestTypeService
+
+ApplicationService ..> AuditService
+PersonService ..> AuditService
+LicenseService ..> AuditService
+TestService ..> AuditService
+UserService ..> AuditService
+DriverService ..> AuditService
+DetentionService ..> AuditService
+InternationalLicenseService ..> AuditService
+
+UserService --> RepositoryLayer
+PersonService --> RepositoryLayer
+ApplicationService --> RepositoryLayer
+LicenseService --> RepositoryLayer
+TestService --> RepositoryLayer
+ValidationService --> RepositoryLayer
+AuditService --> RepositoryLayer
+DriverService --> RepositoryLayer
+CountryService --> RepositoryLayer
+ApplicationTypeService --> RepositoryLayer
+LicenseClassService --> RepositoryLayer
+TestTypeService --> RepositoryLayer
+DetentionService --> RepositoryLayer
+InternationalLicenseService --> RepositoryLayer
+
+RepositoryLayer --> SqlServer
+
+note right of ValidationService
+Validates eligibility, status,
+duplicate licenses, required
+tests, fees, and workflow rules.
+end note
 
 @enduml

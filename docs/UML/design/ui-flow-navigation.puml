@@ -18,6 +18,7 @@ rectangle "User Management" as UserMgmt #FFF3E0
 rectangle "Person Management" as PersonMgmt #FFF3E0
 rectangle "Driver Management" as DriverMgmt #FFF3E0
 rectangle "License Applications" as AppMgmt #FFF3E0
+rectangle "Reference Data\nCountries / Types / Classes" as ReferenceData #FFF3E0
 
 }
 
@@ -38,6 +39,7 @@ Dashboard --> UserMgmt
 Dashboard --> PersonMgmt
 Dashboard --> DriverMgmt
 Dashboard --> AppMgmt
+Dashboard --> ReferenceData
 
 Dashboard --> TestMgmt
 Dashboard --> LicenseServices

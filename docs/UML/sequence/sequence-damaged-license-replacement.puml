@@ -1,0 +1,22 @@
+@startuml sequence-damaged-license-replacement
+title Damaged License Replacement - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "LicenseService" as LicenseService
+database "SQL Server Database" as DB
+
+Employee -> UI : Submit damaged license replacement request
+UI -> LicenseService : Send license number and damaged license confirmation
+LicenseService -> DB : Retrieve license information
+DB --> LicenseService : License data
+
+alt Damaged license surrendered
+  LicenseService -> DB : Create damaged replacement record
+  DB --> LicenseService : Replacement saved
+  LicenseService --> UI : Display replacement confirmation
+else Damaged license not surrendered
+  LicenseService --> UI : Display surrender required message
+end
+
+@enduml
