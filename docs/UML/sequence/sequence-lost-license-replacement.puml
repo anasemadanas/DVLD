@@ -1,0 +1,25 @@
+@startuml sequence-lost-license-replacement
+title Lost License Replacement - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "LicenseService" as LicenseService
+database "SQL Server Database" as DB
+
+Employee -> UI : Submit lost license replacement request
+UI -> LicenseService : Send license number
+LicenseService -> DB : Retrieve license information
+DB --> LicenseService : License data
+
+LicenseService -> DB : Check detention status
+DB --> LicenseService : Detention status
+
+alt License is not detained
+  LicenseService -> DB : Create replacement license record
+  DB --> LicenseService : Replacement saved
+  LicenseService --> UI : Display replacement confirmation
+else License is detained
+  LicenseService --> UI : Display replacement not allowed
+end
+
+@enduml

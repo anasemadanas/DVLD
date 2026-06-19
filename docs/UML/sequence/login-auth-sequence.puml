@@ -1,0 +1,62 @@
+@startuml login-auth-sequence
+title Login / Authentication - Sequence Diagram
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+
+actor "User" as User
+boundary "Login UI" as LoginUI
+control "AuthenticationService" as AuthService
+control "UserService" as UserService
+control "UserRepository" as UserRepository
+database "SQL Server Database" as DB
+control "AuditService" as AuditService
+boundary "Dashboard" as Dashboard
+
+User -> LoginUI : Enter username and password
+LoginUI -> AuthService : Login(username, password)
+AuthService -> AuthService : Validate required input
+AuthService -> UserService : GetUserByUsername(username)
+UserService -> UserRepository : FindByUsername(username)
+UserRepository -> DB : Query Users by UserName
+
+alt Database error
+  DB --> UserRepository : Database exception
+  UserRepository --> UserService : Return data access error
+  UserService --> AuthService : Return authentication unavailable
+  AuthService -> AuditService : Record login failure
+  AuthService --> LoginUI : Display service unavailable error
+  LoginUI --> User : Show database error message
+else User account found
+  DB --> UserRepository : User account row
+  UserRepository --> UserService : User account
+  UserService --> AuthService : User account
+  AuthService -> AuthService : Verify password hash
+
+  alt Invalid credentials
+    AuthService -> AuditService : Record login failure
+    AuthService --> LoginUI : Display invalid credentials
+    LoginUI --> User : Show login error
+  else Inactive user
+    AuthService -> AuthService : Check IsActive = false
+    AuthService -> AuditService : Record inactive login attempt
+    AuthService --> LoginUI : Display inactive account message
+    LoginUI --> User : Show inactive account message
+  else Successful login
+    AuthService -> AuthService : Check IsActive = true
+    AuthService -> AuditService : Record login success
+    AuthService --> LoginUI : Return authenticated session
+    LoginUI -> Dashboard : Open Dashboard
+    Dashboard --> User : Display authorized dashboard
+  end
+else User account not found
+  DB --> UserRepository : No matching user
+  UserRepository --> UserService : User not found
+  UserService --> AuthService : User not found
+  AuthService -> AuditService : Record login failure
+  AuthService --> LoginUI : Display invalid credentials
+  LoginUI --> User : Show login error
+end
+
+@enduml

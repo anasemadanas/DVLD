@@ -1,0 +1,117 @@
+@startuml class-diagram
+title DVLD System - Conceptual Domain Model
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+note as ConceptualModelNote
+This diagram is a conceptual domain model for business understanding.
+It is not the physical database model and is not intended to mirror script.sql
+table names, column names, SQL Server data types, or enforced constraints.
+Use docs/UML/database/*-erd.puml and script.sql for the SQL-backed model.
+end note
+
+class Person {
+  +PersonID: int
+  +NationalNumber: string
+  +FullName: string
+  +DateOfBirth: Date
+  +Address: string
+  +PhoneNumber: string
+  +Email: string
+  +Nationality: string
+  +PersonalPhoto: string
+}
+
+class User {
+  +UserID: int
+  +Username: string
+  +Password: string
+  +IsActive: bool
+}
+
+class Driver {
+  +DriverID: int
+  +CreatedDate: Date
+}
+
+class Application {
+  +ApplicationID: int
+  +ApplicationDate: Date
+  +ApplicationType: string
+  +Status: string
+  +PaidFees: decimal
+}
+
+class License {
+  +LicenseID: int
+  +LicenseNumber: string
+  +IssueDate: Date
+  +ExpiryDate: Date
+  +IssueReason: string
+  +Notes: string
+  +IsActive: bool
+}
+
+class LicenseClass {
+  +LicenseClassID: int
+  +ClassName: string
+  +ClassDescription: string
+  +MinimumAllowedAge: int
+  +ValidityLength: int
+  +ClassFees: decimal
+}
+
+class TestAppointment {
+  +AppointmentID: int
+  +AppointmentDate: Date
+  +PaidFees: decimal
+}
+
+class TestResult {
+  +TestResultID: int
+  +Result: string
+  +Score: int
+  +TestDate: Date
+}
+
+class TestType {
+  +TestTypeID: int
+  +TestTypeName: string
+  +Fees: decimal
+}
+
+class DetainedLicense {
+  +DetentionID: int
+  +DetentionDate: Date
+  +FineAmount: decimal
+  +Reason: string
+  +ReleaseDate: Date
+}
+
+class InternationalLicense {
+  +InternationalLicenseID: int
+  +IssueDate: Date
+  +ExpiryDate: Date
+  +IsActive: bool
+}
+
+class AuditLog {
+  +AuditID: int
+  +OperationName: string
+  +OperationDate: Date
+}
+
+Person "1" -- "0..1" User
+Person "1" -- "0..1" Driver
+Person "1" -- "0..*" Application
+Driver "1" -- "0..*" License
+LicenseClass "1" -- "0..*" License
+Application "1" -- "0..*" TestAppointment
+TestType "1" -- "0..*" TestAppointment
+TestAppointment "1" -- "0..1" TestResult
+License "1" -- "0..*" DetainedLicense
+Driver "1" -- "0..*" InternationalLicense
+User "1" -- "0..*" AuditLog
+
+@enduml

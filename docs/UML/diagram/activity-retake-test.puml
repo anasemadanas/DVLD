@@ -1,0 +1,20 @@
+@startuml activity-retake-test.puml
+title Retake Test Service - Activity Diagram
+
+start
+
+:Enter previous test number;
+:Retrieve previous test result;
+
+if (Previous test failed?) then (Yes)
+  :Create new retake application;
+  :Link retake application to original application;
+  :Pay retake service fee and test fee;
+  :Schedule new test appointment;
+  :Display appointment confirmation;
+else (No)
+  :Reject retake request;
+endif
+
+stop
+@enduml

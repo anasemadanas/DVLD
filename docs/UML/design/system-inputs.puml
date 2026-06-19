@@ -1,0 +1,72 @@
+@startuml system-inputs.puml
+title DVLD System - Input / Output Flow Diagram
+
+left to right direction
+skinparam shadowing false
+skinparam rectangle {
+  RoundCorner 12
+  BorderColor #333333
+}
+
+' Input Color
+skinparam rectangle<<Input>> {
+  BackgroundColor #FFE0B2
+  BorderColor #F57C00
+}
+
+' Process Color
+skinparam rectangle<<Process>> {
+  BackgroundColor #D6EAF8
+  BorderColor #1565C0
+}
+
+' Output Color
+skinparam rectangle<<Output>> {
+  BackgroundColor #C8E6C9
+  BorderColor #2E7D32
+}
+
+rectangle "User Credentials" as I1 <<Input>>
+rectangle "Person Information" as I2 <<Input>>
+rectangle "License Application" as I3 <<Input>>
+rectangle "Test Appointment" as I4 <<Input>>
+rectangle "Test Result" as I5 <<Input>>
+rectangle "License Service Request" as I6 <<Input>>
+rectangle "Detention Information" as I7 <<Input>>
+
+rectangle "DVLD System\nCore Engine" as CORE <<Process>>
+
+rectangle "Issued Driving Licenses" as O1 <<Output>>
+rectangle "Application Status" as O2 <<Output>>
+rectangle "Test Results and Scores" as O3 <<Output>>
+rectangle "Driver Records" as O4 <<Output>>
+rectangle "International Licenses" as O5 <<Output>>
+rectangle "Detention and Release Records" as O6 <<Output>>
+rectangle "Audit Logs" as O7 <<Output>>
+rectangle "Search Results" as O8 <<Output>>
+
+I1 --> CORE
+I2 --> CORE
+I3 --> CORE
+I4 --> CORE
+I5 --> CORE
+I6 --> CORE
+I7 --> CORE
+
+CORE --> O1
+CORE --> O2
+CORE --> O3
+CORE --> O4
+CORE --> O5
+CORE --> O6
+CORE --> O7
+CORE --> O8
+
+legend bottom
+|= Color |= Description |
+|<#FFE0B2>| Input Data |
+|<#D6EAF8>| System Processing |
+|<#C8E6C9>| Output Data |
+endlegend
+
+@enduml

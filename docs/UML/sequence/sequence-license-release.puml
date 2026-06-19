@@ -1,0 +1,22 @@
+@startuml sequence-license-release.puml
+title Driving License Release - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "DetentionService" as DetentionService
+database "SQL Server Database" as DB
+
+Employee -> UI : Enter detained license number
+UI -> DetentionService : Request license release
+DetentionService -> DB : Retrieve detention record
+DB --> DetentionService : Detention data
+
+alt Fine is paid
+  DetentionService -> DB : Update release date
+  DB --> DetentionService : Release saved
+  DetentionService --> UI : Display release confirmation
+else Fine is not paid
+  DetentionService --> UI : Display fine payment required
+end
+
+@enduml

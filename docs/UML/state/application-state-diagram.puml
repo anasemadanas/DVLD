@@ -1,0 +1,36 @@
+@startuml application-state-diagram
+title DVLD Application Lifecycle - State Diagram
+
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam state {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+
+[*] --> New : Submit Application
+
+state "In Review / Processing" as InReview
+state "Rejected / Blocked" as RejectedBlocked
+
+New --> InReview : Validate Application
+New --> Cancelled : Cancel Application
+New --> RejectedBlocked : Reject Invalid Application
+
+InReview --> Completed : Complete Required Workflow
+InReview --> Cancelled : Cancel Application
+InReview --> RejectedBlocked : Reject Invalid Application
+
+RejectedBlocked --> InReview : Correct And Revalidate
+
+Completed --> [*]
+Cancelled --> [*]
+
+note right of RejectedBlocked
+Used when validation, eligibility,
+duplicate active application, payment,
+or workflow prerequisites fail.
+end note
+
+@enduml

@@ -1,0 +1,124 @@
+@startuml component_architecture
+title DVLD System - Component Architecture
+
+left to right direction
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam nodesep 55
+skinparam ranksep 50
+
+skinparam package {
+  BorderColor #334155
+  FontColor #0F172A
+  FontStyle bold
+}
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #475569
+  FontColor #111827
+}
+skinparam database {
+  BackgroundColor #FCE7F3
+  BorderColor #9D174D
+}
+
+package "Presentation Components" #E0F2FE {
+  component "Authentication UI" as AuthUI
+  component "Administration UI" as AdminUI
+  component "Application UI" as ApplicationUI
+  component "License Services UI" as LicenseUI
+  component "Testing UI" as TestingUI
+  component "Inquiry & Reports UI" as InquiryUI
+}
+
+package "Business Services" #FEF3C7 {
+  component "AuthenticationService" as AuthenticationService
+  component "UserService" as UserService
+  component "PersonService" as PersonService
+  component "ApplicationService" as ApplicationService
+  component "LicenseService" as LicenseService
+  component "TestService" as TestService
+  component "ValidationService" as ValidationService
+  component "AuditService" as AuditService
+  component "DriverService" as DriverService
+  component "CountryService" as CountryService
+  component "ApplicationTypeService" as ApplicationTypeService
+  component "LicenseClassService" as LicenseClassService
+  component "TestTypeService" as TestTypeService
+  component "DetentionService" as DetentionService
+  component "InternationalLicenseService" as InternationalLicenseService
+}
+
+package "Repository-Based Data Access" #DCFCE7 {
+  component "UserRepository" as UserRepository
+  component "ApplicationRepository" as ApplicationRepository
+  component "LicenseRepository" as LicenseRepository
+  component "TestRepository" as TestRepository
+  component "AuditRepository" as AuditRepository
+  component "Repository Gateway" as RepositoryGateway
+}
+
+database "SQL Server\nDVLD Database" as SqlServer
+
+AuthUI --> AuthenticationService
+AdminUI --> UserService
+AdminUI --> PersonService
+ApplicationUI --> ApplicationService
+LicenseUI --> LicenseService
+TestingUI --> TestService
+InquiryUI --> ApplicationService
+InquiryUI --> LicenseService
+AdminUI --> CountryService
+AdminUI --> ApplicationTypeService
+AdminUI --> LicenseClassService
+AdminUI --> TestTypeService
+ApplicationUI --> DriverService
+LicenseUI --> DetentionService
+LicenseUI --> InternationalLicenseService
+
+AuthenticationService --> UserService
+PersonService --> ValidationService
+ApplicationService --> ValidationService
+LicenseService --> ValidationService
+TestService --> ValidationService
+DriverService --> ValidationService
+DetentionService --> ValidationService
+InternationalLicenseService --> ValidationService
+
+ApplicationService ..> AuditService : records activity
+PersonService ..> AuditService : records activity
+LicenseService ..> AuditService : records activity
+TestService ..> AuditService : records activity
+UserService ..> AuditService : records activity
+DriverService ..> AuditService : records activity
+DetentionService ..> AuditService : records activity
+InternationalLicenseService ..> AuditService : records activity
+
+AuthenticationService --> UserRepository
+UserService --> UserRepository
+PersonService --> UserRepository
+ApplicationService --> ApplicationRepository
+LicenseService --> LicenseRepository
+TestService --> TestRepository
+ValidationService --> ApplicationRepository
+ValidationService --> LicenseRepository
+AuditService --> AuditRepository
+DriverService --> LicenseRepository
+CountryService --> ApplicationRepository
+ApplicationTypeService --> ApplicationRepository
+LicenseClassService --> LicenseRepository
+TestTypeService --> TestRepository
+DetentionService --> LicenseRepository
+InternationalLicenseService --> LicenseRepository
+
+UserRepository --> RepositoryGateway
+ApplicationRepository --> RepositoryGateway
+LicenseRepository --> RepositoryGateway
+TestRepository --> RepositoryGateway
+AuditRepository --> RepositoryGateway
+RepositoryGateway --> SqlServer
+
+@enduml

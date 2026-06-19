@@ -1,0 +1,60 @@
+@startuml issue-driving-license-sequence
+title Issue Driving License - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD User Interface" as UI
+control "LicenseService" as LicenseService
+control "ValidationService" as ValidationService
+control "TestService" as TestService
+control "DriverService" as DriverService
+control "LicenseRepository" as LicenseRepository
+database "SQL Server Database" as DB
+
+Employee -> UI : Submit application number
+UI -> LicenseService : IssueDrivingLicense(applicationNumber)
+
+LicenseService -> ValidationService : ValidateApplicantEligibility(applicationNumber)
+ValidationService -> DB : Check minimum age
+DB --> ValidationService : Minimum age result
+ValidationService -> DB : Check duplicate license class
+DB --> ValidationService : Duplicate license result
+ValidationService -> DB : Check application status
+DB --> ValidationService : Application status result
+ValidationService -> DB : Check required conditions
+DB --> ValidationService : Required conditions result
+ValidationService --> LicenseService : Eligibility validation result
+
+alt Eligibility validation failed
+  LicenseService --> UI : Return validation error
+  UI --> Employee : Display validation error
+else Applicant eligible
+  LicenseService -> TestService : VerifyRequiredTests(applicationNumber)
+  TestService -> DB : Verify vision test is passed
+  DB --> TestService : Vision test result
+  TestService -> DB : Verify written test is passed
+  DB --> TestService : Written test result
+  TestService -> DB : Verify practical test is passed
+  DB --> TestService : Practical test result
+  TestService --> LicenseService : Required tests result
+
+  alt Required tests are not passed
+    LicenseService --> UI : Return test requirement error
+    UI --> Employee : Display test requirement error
+  else All required tests passed
+    LicenseService -> DriverService : CreateDriverIfNeeded(applicationNumber)
+    DriverService -> DB : Check existing driver record
+    DB --> DriverService : Driver lookup result
+    DriverService -> DB : Create driver record if missing
+    DB --> DriverService : Driver record result
+    DriverService --> LicenseService : Driver record ready
+
+    LicenseService -> LicenseRepository : CreateDrivingLicense(applicationNumber)
+    LicenseRepository -> DB : Save issued license
+    DB --> LicenseRepository : License saved
+    LicenseRepository --> LicenseService : Issued license details
+    LicenseService --> UI : Return license issuance confirmation
+    UI --> Employee : Display license issuance confirmation
+  end
+end
+
+@enduml

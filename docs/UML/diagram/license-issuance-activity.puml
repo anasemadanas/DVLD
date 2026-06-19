@@ -1,0 +1,31 @@
+@startuml license-issuance-activity
+title License Issuance - Activity Diagram
+
+start
+
+:Employee enters application number;
+:System retrieves application information;
+:System validates applicant eligibility;
+
+if (Applicant eligible?) then (Yes)
+  :System verifies vision test;
+  :System verifies written test;
+  :System verifies practical test;
+
+  if (All tests passed?) then (Yes)
+    :System creates driver record if needed;
+    :System generates unique license number;
+    :System saves issued license;
+    :System records audit log;
+    :System displays confirmation;
+  else (No)
+    :Reject issuance;
+    :Display test requirement message;
+  endif
+else (No)
+  :Reject issuance;
+  :Display eligibility error;
+endif
+
+stop
+@enduml

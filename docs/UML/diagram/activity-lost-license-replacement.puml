@@ -1,0 +1,20 @@
+@startuml activity-lost-license-replacement.puml
+title Lost License Replacement - Activity Diagram
+
+start
+
+:Enter license number;
+:Retrieve license information;
+:Check detention status;
+
+if (License detained?) then (Yes)
+  :Reject replacement request;
+else (No)
+  :Pay replacement fee;
+  :Issue replacement license;
+  :Save replacement record;
+  :Display confirmation;
+endif
+
+stop
+@enduml

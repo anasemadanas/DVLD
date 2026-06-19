@@ -1,0 +1,26 @@
+@startuml activity-license-detention-release.puml
+title Driving License Detention and Release - Activity Diagram
+
+start
+
+:Enter license number;
+:Record detention reason;
+:Record fine amount;
+:Record detention date;
+:Save detention record;
+
+if (Release requested?) then (Yes)
+  :Verify fine payment;
+  if (Fine paid?) then (Yes)
+    :Record release date;
+    :Release detained license;
+    :Display release confirmation;
+  else (No)
+    :Keep license detained;
+  endif
+else (No)
+  :Keep license detained;
+endif
+
+stop
+@enduml

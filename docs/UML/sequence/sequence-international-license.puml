@@ -1,0 +1,39 @@
+@startuml sequence-international-license.puml
+title International License Issuance - Sequence Diagram
+
+actor "Licensing Employee" as Employee
+boundary "DVLD UI" as UI
+control "InternationalLicenseService" as InternationalService
+control "LicenseService" as LicenseService
+control "Data Access Layer" as DAL
+database "SQL Server Database" as DB
+
+Employee -> UI : Submit international license request
+UI -> InternationalService : Send local license number
+InternationalService -> LicenseService : Validate local license
+LicenseService -> DAL : Retrieve local license data
+DAL -> DB : Query license
+DB --> DAL : License data
+DAL --> LicenseService : License information
+
+alt Valid Class 3 license and not detained
+  InternationalService -> DAL : Check active international license
+  DAL -> DB : Query active international license
+  DB --> DAL : Active license status
+
+  alt Active international license exists
+    InternationalService -> DAL : Cancel active international license
+    DAL -> DB : Update old international license
+    DB --> DAL : Old license cancelled
+  end
+
+  InternationalService -> DAL : Create international license
+  DAL -> DB : Insert international license
+  DB --> DAL : International license saved
+  InternationalService --> UI : Display issuance confirmation
+
+else Not eligible
+  InternationalService --> UI : Display eligibility error
+end
+
+@enduml

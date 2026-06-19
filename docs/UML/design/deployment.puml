@@ -1,0 +1,33 @@
+@startuml deployment
+title DVLD System - Deployment Diagram
+
+skinparam shadowing false
+skinparam node {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+}
+skinparam database {
+  BackgroundColor #E8F5E9
+  BorderColor #2E7D32
+}
+left to right direction
+
+node "DVLD Employee Workstation" as Client {
+  artifact "DVLD Desktop Application" as App {
+    component "Presentation Layer" as PL
+    component "Business Layer" as BL
+    component "Data Access Layer" as DAL
+  }
+}
+
+node "Database Server" as Server {
+  database "SQL Server Database" as DB
+}
+
+PL --> BL
+BL --> DAL
+DAL --> DB : SQL Connection
+
+Client --> Server : Local Network
+
+@enduml

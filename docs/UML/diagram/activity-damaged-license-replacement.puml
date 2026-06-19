@@ -1,0 +1,20 @@
+@startuml activity-damaged-license-replacement.puml
+title Damaged License Replacement - Activity Diagram
+
+start
+
+:Enter license number;
+:Retrieve license information;
+:Confirm damaged license surrender;
+
+if (Damaged license surrendered?) then (Yes)
+  :Pay replacement fee;
+  :Issue replacement license;
+  :Record replacement issue date;
+  :Display confirmation;
+else (No)
+  :Reject request until license is surrendered;
+endif
+
+stop
+@enduml

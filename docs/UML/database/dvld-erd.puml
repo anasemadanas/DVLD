@@ -1,0 +1,184 @@
+@startuml dvld-erd
+title DVLD System - ERD
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam entity {
+    BackgroundColor #F8FAFC
+    BorderColor #334155
+    FontColor #111827
+}
+
+entity "Applications" as Applications {
+    * ApplicationID : int <<PK, not null, identity>>
+    --
+    # ApplicantPersonID : int <<FK, not null>>
+    - ApplicationDate : datetime <<not null>>
+    # ApplicationTypeID : int <<FK, not null>>
+    - ApplicationStatus : tinyint <<not null>>
+    - LastStatusDate : datetime <<not null>>
+    - PaidFees : smallmoney <<not null>>
+    # CreatedByUserID : int <<FK, not null>>
+}
+
+entity "ApplicationTypes" as ApplicationTypes {
+    * ApplicationTypeID : int <<PK, not null, identity>>
+    --
+    - ApplicationTypeTitle : nvarchar(150) <<not null>>
+    - ApplicationFees : smallmoney <<not null>>
+}
+
+entity "Countries" as Countries {
+    * CountryID : int <<PK, not null, identity>>
+    --
+    - CountryName : nvarchar(50) <<not null>>
+}
+
+entity "DetainedLicenses" as DetainedLicenses {
+    * DetainID : int <<PK, not null, identity>>
+    --
+    # LicenseID : int <<FK, not null>>
+    - DetainDate : smalldatetime <<not null>>
+    - FineFees : smallmoney <<not null>>
+    # CreatedByUserID : int <<FK, not null>>
+    - IsReleased : bit <<not null>>
+    - ReleaseDate : smalldatetime <<null>>
+    # ReleasedByUserID : int <<FK, null>>
+    # ReleaseApplicationID : int <<FK, null>>
+}
+
+entity "Drivers" as Drivers {
+    * DriverID : int <<PK, not null, identity>>
+    --
+    # PersonID : int <<FK, not null>>
+    # CreatedByUserID : int <<FK, not null>>
+    - CreatedDate : smalldatetime <<not null>>
+}
+
+entity "InternationalLicenses" as InternationalLicenses {
+    * InternationalLicenseID : int <<PK, not null, identity>>
+    --
+    # ApplicationID : int <<FK, not null>>
+    # DriverID : int <<FK, not null>>
+    # IssuedUsingLocalLicenseID : int <<FK, not null>>
+    - IssueDate : smalldatetime <<not null>>
+    - ExpirationDate : smalldatetime <<not null>>
+    - IsActive : bit <<not null>>
+    # CreatedByUserID : int <<FK, not null>>
+}
+
+entity "LicenseClasses" as LicenseClasses {
+    * LicenseClassID : int <<PK, not null, identity>>
+    --
+    - ClassName : nvarchar(50) <<not null>>
+    - ClassDescription : nvarchar(500) <<not null>>
+    - MinimumAllowedAge : tinyint <<not null>>
+    - DefaultValidityLength : tinyint <<not null>>
+    - ClassFees : smallmoney <<not null>>
+}
+
+entity "Licenses" as Licenses {
+    * LicenseID : int <<PK, not null, identity>>
+    --
+    # ApplicationID : int <<FK, not null>>
+    # DriverID : int <<FK, not null>>
+    # LicenseClass : int <<FK, not null>>
+    - IssueDate : datetime <<not null>>
+    - ExpirationDate : datetime <<not null>>
+    - Notes : nvarchar(500) <<null>>
+    - PaidFees : smallmoney <<not null>>
+    - IsActive : bit <<not null>>
+    - IssueReason : tinyint <<not null>>
+    # CreatedByUserID : int <<FK, not null>>
+}
+
+entity "LocalDrivingLicenseApplications" as LocalDrivingLicenseApplications {
+    * LocalDrivingLicenseApplicationID : int <<PK, not null, identity>>
+    --
+    # ApplicationID : int <<FK, not null>>
+    # LicenseClassID : int <<FK, not null>>
+}
+
+entity "People" as People {
+    * PersonID : int <<PK, not null, identity>>
+    --
+    - NationalNo : nvarchar(20) <<not null>>
+    - FirstName : nvarchar(20) <<not null>>
+    - SecondName : nvarchar(20) <<not null>>
+    - ThirdName : nvarchar(20) <<null>>
+    - LastName : nvarchar(20) <<not null>>
+    - DateOfBirth : datetime <<not null>>
+    - Gendor : tinyint <<not null>>
+    - Address : nvarchar(500) <<not null>>
+    - Phone : nvarchar(20) <<not null>>
+    - Email : nvarchar(50) <<null>>
+    # NationalityCountryID : int <<FK, not null>>
+    - ImagePath : nvarchar(250) <<null>>
+}
+
+entity "TestAppointments" as TestAppointments {
+    * TestAppointmentID : int <<PK, not null, identity>>
+    --
+    # TestTypeID : int <<FK, not null>>
+    # LocalDrivingLicenseApplicationID : int <<FK, not null>>
+    - AppointmentDate : smalldatetime <<not null>>
+    - PaidFees : smallmoney <<not null>>
+    # CreatedByUserID : int <<FK, not null>>
+    - IsLocked : bit <<not null>>
+}
+
+entity "Tests" as Tests {
+    * TestID : int <<PK, not null, identity>>
+    --
+    # TestAppointmentID : int <<FK, not null>>
+    - TestResult : bit <<not null>>
+    - Notes : nvarchar(500) <<null>>
+    # CreatedByUserID : int <<FK, not null>>
+}
+
+entity "TestTypes" as TestTypes {
+    * TestTypeID : int <<PK, not null, identity>>
+    --
+    - TestTypeTitle : nvarchar(100) <<not null>>
+    - TestTypeDescription : nvarchar(500) <<not null>>
+    - TestTypeFees : smallmoney <<not null>>
+}
+
+entity "Users" as Users {
+    * UserID : int <<PK, not null, identity>>
+    --
+    # PersonID : int <<FK, not null>>
+    - UserName : nvarchar(20) <<not null>>
+    - Password : nvarchar(20) <<not null>>
+    - IsActive : bit <<not null>>
+}
+
+ApplicationTypes ||--o{ Applications : FK_Applications_ApplicationTypes
+People ||--o{ Applications : FK_Applications_People
+Users ||--o{ Applications : FK_Applications_Users
+Applications ||--o{ DetainedLicenses : FK_DetainedLicenses_Applications
+Licenses ||--o{ DetainedLicenses : FK_DetainedLicenses_Licenses
+Users ||--o{ DetainedLicenses : FK_DetainedLicenses_Users
+Users ||--o{ DetainedLicenses : FK_DetainedLicenses_Users1
+People ||--o{ Drivers : FK_Drivers_People
+Users ||--o{ Drivers : FK_Drivers_Users
+Applications ||--o{ InternationalLicenses : FK_InternationalLicenses_Applications
+Drivers ||--o{ InternationalLicenses : FK_InternationalLicenses_Drivers
+Licenses ||--o{ InternationalLicenses : FK_InternationalLicenses_Licenses
+Users ||--o{ InternationalLicenses : FK_InternationalLicenses_Users
+Applications ||--o{ Licenses : FK_Licenses_Applications
+Drivers ||--o{ Licenses : FK_Licenses_Drivers
+LicenseClasses ||--o{ Licenses : FK_Licenses_LicenseClasses
+Users ||--o{ Licenses : FK_Licenses_Users
+Applications ||--o{ LocalDrivingLicenseApplications : FK_DrivingLicsenseApplications_Applications
+LicenseClasses ||--o{ LocalDrivingLicenseApplications : FK_DrivingLicsenseApplications_LicenseClasses
+Countries ||--o{ People : FK_People_Countries1
+LocalDrivingLicenseApplications ||--o{ TestAppointments : FK_TestAppointments_LocalDrivingLicenseApplications
+TestTypes ||--o{ TestAppointments : FK_TestAppointments_TestTypes
+Users ||--o{ TestAppointments : FK_TestAppointments_Users
+TestAppointments ||--o{ Tests : FK_Tests_TestAppointments
+Users ||--o{ Tests : FK_Tests_Users
+People ||--o{ Users : FK_Users_People
+
+@enduml

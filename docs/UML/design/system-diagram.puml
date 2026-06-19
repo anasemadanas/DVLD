@@ -1,0 +1,71 @@
+@startuml system-diagram
+title DVLD System - Deployment and System Overview
+
+top to bottom direction
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam nodesep 55
+skinparam ranksep 50
+
+skinparam node {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  FontColor #111827
+}
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #475569
+  FontColor #111827
+}
+skinparam database {
+  BackgroundColor #FCE7F3
+  BorderColor #9D174D
+}
+skinparam artifact {
+  BackgroundColor #EEF2FF
+  BorderColor #4338CA
+}
+
+actor "DVLD Staff" as Staff
+
+node "Employee Workstation" as Workstation {
+  artifact "DVLD Desktop Application" as DesktopApp
+  component "Presentation Layer" as Presentation
+}
+
+node "Application Runtime" as Runtime {
+  component "Business Layer Services" as BusinessServices
+  component "Repository-Based Data Access" as DataAccess
+}
+
+node "Database Server" as DatabaseServer {
+  database "SQL Server\nDVLD Database" as SqlServer
+}
+
+node "Operations & Support" as Operations {
+  component "Backup / Restore" as Backup
+  component "Audit Review" as AuditReview
+  component "Reports Export" as ReportsExport
+}
+
+Staff --> DesktopApp
+DesktopApp --> Presentation
+Presentation --> BusinessServices : service requests
+BusinessServices --> DataAccess : repositories
+DataAccess --> SqlServer : SQL transactions
+
+SqlServer --> Backup
+SqlServer --> AuditReview
+BusinessServices --> ReportsExport
+
+note right of Runtime
+Enterprise layering keeps UI,
+business rules, data access,
+and persistence responsibilities
+separate and maintainable.
+end note
+
+@enduml
