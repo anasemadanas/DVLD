@@ -4,15 +4,6 @@ title DVLD System - Conceptual ERD
 skinparam shadowing false
 skinparam linetype ortho
 skinparam backgroundColor #FFFFFF
-skinparam entity {
-  BackgroundColor #F8FAFC
-  BorderColor #334155
-  FontColor #111827
-}
-
-' High-level conceptual view:
-' - DVLD entities and relationships only
-' - No attributes, data types, PKs, or FKs
 
 entity "Countries" as Countries
 entity "People" as People
@@ -29,33 +20,50 @@ entity "TestTypes" as TestTypes
 entity "TestAppointments" as TestAppointments
 entity "Tests" as Tests
 
-Countries ||--o{ People : nationality
-People ||--o| Users : account
-People ||--o| Drivers : driver profile
-People ||--o{ Applications : submits
 
-ApplicationTypes ||--o{ Applications : classifies
-Applications ||--o| LDLApplications : local request
-LicenseClasses ||--o{ LDLApplications : requested class
-LicenseClasses ||--o{ Licenses : license class
+Countries ||--o{ People : FK_People_Countries1
 
-Drivers ||--o{ Licenses : holds
-Drivers ||--o{ InternationalLicenses : holds
-Applications ||--o{ Licenses : issues
-Applications ||--o{ InternationalLicenses : issues
-Licenses ||--o{ InternationalLicenses : local basis
-Licenses ||--o{ DetainedLicenses : detention history
+People ||--o{ Users : FK_Users_People
+People ||--o{ Drivers : FK_Drivers_People
+People ||--o{ Applications : FK_Applications_People
 
-TestTypes ||--o{ TestAppointments : appointment type
-LDLApplications ||--o{ TestAppointments : schedules
-TestAppointments ||--o{ Tests : records
+Users ||--o{ Applications : FK_Applications_Users
+Users ||--o{ Drivers : FK_Drivers_Users
+Users ||--o{ Licenses : FK_Licenses_Users
+Users ||--o{ InternationalLicenses : FK_InternationalLicenses_Users
 
-Users ||--o{ Drivers : creates
-Users ||--o{ Applications : creates
-Users ||--o{ Licenses : creates
-Users ||--o{ InternationalLicenses : creates
-Users ||--o{ DetainedLicenses : creates
-Users ||--o{ TestAppointments : creates
-Users ||--o{ Tests : creates
+Users ||--o{ TestAppointments : FK_TestAppointments_Users
+Users ||--o{ Tests : FK_Tests_Users
+
+Users ||--o{ DetainedLicenses : FK_CreatedByUser
+Users ||--o{ DetainedLicenses : FK_ReleasedByUser
+
+ApplicationTypes ||--o{ Applications : FK_Applications_ApplicationTypes
+
+Applications ||--o| LDLApplications : FK_DrivingLicsenseApplications_Applications
+
+LicenseClasses ||--o{ LDLApplications : FK_DrivingLicsenseApplications_LicenseClasses
+
+Applications ||--o{ Licenses : FK_Licenses_Applications
+
+Applications ||--o{ InternationalLicenses : FK_InternationalLicenses_Applications
+
+Applications ||--o{ DetainedLicenses : FK_DetainedLicenses_Applications
+
+Drivers ||--|{ Licenses : FK_Licenses_Drivers
+
+LicenseClasses ||--o{ Licenses : FK_Licenses_LicenseClasses
+
+Drivers ||--o{ InternationalLicenses : FK_InternationalLicenses_Drivers
+
+Licenses ||--o{ InternationalLicenses : FK_InternationalLicenses_Licenses
+
+Licenses ||--o{ DetainedLicenses : FK_DetainedLicenses_Licenses
+
+LDLApplications ||--o{ TestAppointments : FK_TestAppointments_LocalDrivingLicenseApplications
+
+TestTypes ||--o{ TestAppointments : FK_TestAppointments_TestTypes
+
+TestAppointments ||--o{ Tests : FK_Tests_TestAppointments
 
 @enduml

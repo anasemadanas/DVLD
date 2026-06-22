@@ -172,17 +172,19 @@ package "Licensing and Enforcement" {
 }
 
 Countries ||--o{ People : nationality
+
 People ||--o| Users : optional account role
-People ||--o| Drivers : optional driver role
+People ||--o{ Drivers : optional driver role
 People ||--o{ Applications : applicant
 
 ApplicationTypes ||--o{ Applications : workflow type
+
 Applications ||--o| LDLApplications : local-license detail
 
 LicenseClasses ||--o{ LDLApplications : requested class
 LicenseClasses ||--o{ Licenses : issued class
 
-Drivers ||--o{ Licenses : holds
+Drivers ||--|{ Licenses : holds
 Drivers ||--o{ InternationalLicenses : holds
 
 Applications ||--o{ Licenses : source application
@@ -190,6 +192,11 @@ Applications ||--o{ InternationalLicenses : source application
 
 Licenses ||--o{ DetainedLicenses : enforcement history
 Licenses ||--o{ InternationalLicenses : local-license basis
+
+Applications ||--o{ DetainedLicenses : release application
+
+Users ||--o{ TestAppointments : creates
+Users ||--o{ DetainedLicenses : releases
 
 TestTypes ||--o{ TestAppointments : appointment type
 LDLApplications ||--o{ TestAppointments : required tests
@@ -201,7 +208,6 @@ Users ||--o{ Licenses : creates
 Users ||--o{ InternationalLicenses : creates
 Users ||--o{ DetainedLicenses : creates
 Users ||--o{ Tests : creates
-Users ||--o{ TestAppointments : creates
 
 note right of People
   EER role constraint:

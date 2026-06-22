@@ -1,0 +1,195 @@
+@startuml dvld-erd
+title DVLD System - ERD
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam entity {
+    BackgroundColor #F8FAFC
+    BorderColor #334155
+    FontColor #111827
+}
+
+entity "Applications" as Applications {
+    PK # ApplicationID : int
+    --
+    FK # ApplicantPersonID : int
+      - ApplicationDate : datetime
+    FK # ApplicationTypeID : int
+      - ApplicationStatus : tinyint
+      - LastStatusDate : datetime
+      - PaidFees : smallmoney
+    FK # CreatedByUserID : int
+}
+
+entity "ApplicationTypes" as ApplicationTypes {
+    PK # ApplicationTypeID : int
+    --
+      - ApplicationTypeTitle : nvarchar(150)
+      - ApplicationFees : smallmoney
+}
+
+entity "Countries" as Countries {
+    PK # CountryID : int
+    --
+      - CountryName : nvarchar(50)
+}
+
+entity "DetainedLicenses" as DetainedLicenses {
+    PK # DetainID : int
+    --
+    FK # LicenseID : int
+      - DetainDate : smalldatetime
+      - FineFees : smallmoney
+    FK # CreatedByUserID : int
+      - IsReleased : bit
+      - ReleaseDate : smalldatetime
+    FK # ReleasedByUserID : int
+    FK # ReleaseApplicationID : int
+}
+
+entity "Drivers" as Drivers {
+    PK # DriverID : int
+    --
+    FK # PersonID : int
+    FK # CreatedByUserID : int
+      - CreatedDate : smalldatetime
+}
+
+entity "InternationalLicenses" as InternationalLicenses {
+    PK # InternationalLicenseID : int
+    --
+    FK # ApplicationID : int
+    FK # DriverID : int
+    FK # IssuedUsingLocalLicenseID : int
+      - IssueDate : smalldatetime
+      - ExpirationDate : smalldatetime
+      - IsActive : bit
+    FK # CreatedByUserID : int
+}
+
+entity "LicenseClasses" as LicenseClasses {
+    PK # LicenseClassID : int
+    --
+      - ClassName : nvarchar(50)
+      - ClassDescription : nvarchar(500)
+      - MinimumAllowedAge : tinyint
+      - DefaultValidityLength : tinyint
+      - ClassFees : smallmoney
+}
+
+entity "Licenses" as Licenses {
+    PK # LicenseID : int
+    --
+    FK # ApplicationID : int
+    FK # DriverID : int
+    FK # LicenseClass : int
+      - IssueDate : datetime
+      - ExpirationDate : datetime
+      - Notes : nvarchar(500)
+      - PaidFees : smallmoney
+      - IsActive : bit
+      - IssueReason : tinyint
+    FK # CreatedByUserID : int
+}
+
+entity "LocalDrivingLicenseApplications" as LocalDrivingLicenseApplications {
+    PK # LocalDrivingLicenseApplicationID : int
+    --
+    FK # ApplicationID : int
+    FK # LicenseClassID : int
+}
+
+entity "People" as People {
+    PK # PersonID : int
+    --
+      - NationalNo : nvarchar(20)
+      - FirstName : nvarchar(20)
+      - SecondName : nvarchar(20)
+      - ThirdName : nvarchar(20)
+      - LastName : nvarchar(20)
+      - DateOfBirth : datetime
+      - Gendor : tinyint
+      - Address : nvarchar(500)
+      - Phone : nvarchar(20)
+      - Email : nvarchar(50)
+    FK # NationalityCountryID : int
+      - ImagePath : nvarchar(250)
+}
+
+entity "TestAppointments" as TestAppointments {
+    PK # TestAppointmentID : int
+    --
+    FK # TestTypeID : int
+    FK # LocalDrivingLicenseApplicationID : int
+      - AppointmentDate : smalldatetime
+      - PaidFees : smallmoney
+    FK # CreatedByUserID : int
+      - IsLocked : bit
+}
+
+entity "Tests" as Tests {
+    PK # TestID : int
+    --
+    FK # TestAppointmentID : int
+      - TestResult : bit
+      - Notes : nvarchar(500)
+    FK # CreatedByUserID : int
+}
+
+entity "TestTypes" as TestTypes {
+    PK # TestTypeID : int
+    --
+      - TestTypeTitle : nvarchar(100)
+      - TestTypeDescription : nvarchar(500)
+      - TestTypeFees : smallmoney
+}
+
+entity "Users" as Users {
+    PK # UserID : int
+    --
+    FK # PersonID : int
+      - UserName : nvarchar(20)
+      - Password : nvarchar(20)
+      - IsActive : bit
+}
+
+' ================= RELATIONS =================
+
+ApplicationTypes ||--o{ Applications
+People ||--o{ Applications
+Users ||--o{ Applications
+
+Applications ||--o{ DetainedLicenses
+Licenses ||--o{ DetainedLicenses
+Users ||--o{ DetainedLicenses
+Users ||--o{ DetainedLicenses
+
+People ||--o{ Drivers
+Users ||--o{ Drivers
+
+Applications ||--o{ InternationalLicenses
+Drivers ||--o{ InternationalLicenses
+Licenses ||--o{ InternationalLicenses
+Users ||--o{ InternationalLicenses
+
+Applications ||--o{ Licenses
+Drivers ||--|{ Licenses
+LicenseClasses ||--o{ Licenses
+Users ||--o{ Licenses
+
+Applications ||--o| LocalDrivingLicenseApplications
+LicenseClasses ||--o{ LocalDrivingLicenseApplications
+
+Countries ||--o{ People
+
+LocalDrivingLicenseApplications ||--o{ TestAppointments
+TestTypes ||--o{ TestAppointments
+Users ||--o{ TestAppointments
+
+TestAppointments ||--o{ Tests
+Users ||--o{ Tests
+
+People ||--o{ Users
+
+@enduml
