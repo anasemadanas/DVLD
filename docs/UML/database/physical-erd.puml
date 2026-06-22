@@ -159,8 +159,8 @@ People ||--o{ Applications : FK_Applications_People
 Users ||--o{ Applications : FK_Applications_Users
 Applications ||--o{ DetainedLicenses : FK_DetainedLicenses_Applications
 Licenses ||--o{ DetainedLicenses : FK_DetainedLicenses_Licenses
-Users ||--o{ DetainedLicenses : FK_DetainedLicenses_Users
-Users ||--o{ DetainedLicenses : FK_DetainedLicenses_Users1
+Users ||--o{ DetainedLicenses : FK_CreatedByUser
+Users ||--o{ DetainedLicenses : FK_ReleasedByUser
 People ||--o{ Drivers : FK_Drivers_People
 Users ||--o{ Drivers : FK_Drivers_Users
 Applications ||--o{ InternationalLicenses : FK_InternationalLicenses_Applications
@@ -168,10 +168,10 @@ Drivers ||--o{ InternationalLicenses : FK_InternationalLicenses_Drivers
 Licenses ||--o{ InternationalLicenses : FK_InternationalLicenses_Licenses
 Users ||--o{ InternationalLicenses : FK_InternationalLicenses_Users
 Applications ||--o{ Licenses : FK_Licenses_Applications
-Drivers ||--o{ Licenses : FK_Licenses_Drivers
+Drivers ||--|{ Licenses : FK_Licenses_Drivers
 LicenseClasses ||--o{ Licenses : FK_Licenses_LicenseClasses
 Users ||--o{ Licenses : FK_Licenses_Users
-Applications ||--o{ LocalDrivingLicenseApplications : FK_DrivingLicsenseApplications_Applications
+Applications ||--o| LocalDrivingLicenseApplications : FK_DrivingLicsenseApplications_Applications
 LicenseClasses ||--o{ LocalDrivingLicenseApplications : FK_DrivingLicsenseApplications_LicenseClasses
 Countries ||--o{ People : FK_People_Countries1
 LocalDrivingLicenseApplications ||--o{ TestAppointments : FK_TestAppointments_LocalDrivingLicenseApplications

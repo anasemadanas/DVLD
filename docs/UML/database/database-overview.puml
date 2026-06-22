@@ -1,5 +1,5 @@
 @startuml database-overview
-title DVLD System - Database Overview
+title DVLD System - Database Overview (Final Corrected)
 
 left to right direction
 
@@ -17,10 +17,6 @@ skinparam entity {
   BorderColor #334155
   FontColor #111827
 }
-
-' High-level documentation view:
-' - Main database entity groups only
-' - No attributes, keys, or data types
 
 package "Identity & Reference Data" as Identity {
   entity "Countries" as Countries
@@ -47,25 +43,34 @@ package "Testing" as Testing {
   entity "Tests" as Tests
 }
 
-package "Audit / User Ownership" as Audit {
+package "System Users" as Audit {
   entity "Users" as Users
 }
 
+' =======================
+' RELATIONSHIPS 
+' =======================
+
 Countries ||--o{ People : nationality
-People ||--o| Users : account
+
+People ||--o{ Users : account
 People ||--o| Drivers : may become
 People ||--o{ Applications : creates
 
 ApplicationTypes ||--o{ Applications : classifies
-Applications ||--o| LocalApplications : local license request
-LocalApplications }o--|| LicenseClasses : requested class
 
-Drivers ||--o{ Licenses : owns
+Applications ||--o| LocalApplications : local license request
+LicenseClasses ||--o{ LocalApplications : requested class
+
+Drivers ||--|{ Licenses : owns
 LicenseClasses ||--o{ Licenses : license class
+
 Applications ||--o{ Licenses : issues
 Applications ||--o{ InternationalLicenses : issues
 Applications ||--o{ DetainedLicenses : release request
+
 Drivers ||--o{ InternationalLicenses : owns
+
 Licenses ||--o{ InternationalLicenses : basis for
 Licenses ||--o{ DetainedLicenses : detention history
 
@@ -74,9 +79,12 @@ TestTypes ||--o{ TestAppointments : defines
 TestAppointments ||--o{ Tests : produces
 
 Users ||--o{ Applications : creates
+Users ||--o{ Drivers : creates
 Users ||--o{ Licenses : issues
+Users ||--o{ InternationalLicenses : creates
 Users ||--o{ TestAppointments : schedules
 Users ||--o{ Tests : records
-Users ||--o{ DetainedLicenses : manages
+Users ||--o{ DetainedLicenses : creates
+Users ||--o{ DetainedLicenses : releases
 
 @enduml

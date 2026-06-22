@@ -1,5 +1,5 @@
 @startuml crows-foot-erd
-title DVLD System - Crow's Foot ERD
+title DVLD System - Crow's Foot ERD (Corrected)
 
 skinparam shadowing false
 skinparam linetype ortho
@@ -11,10 +11,15 @@ skinparam entity {
   FontColor #111827
 }
 
-' Crow's Foot focus:
-' || mandatory one
-' o| optional one
-' o{ zero or many
+' =======================
+' ENTITIES
+' =======================
+
+entity "Countries" as Countries {
+  * CountryID <<PK>>
+  --
+  CountryName
+}
 
 entity "People" as People {
   * PersonID <<PK>>
@@ -25,18 +30,12 @@ entity "People" as People {
   ThirdName
   LastName
   DateOfBirth
+  Gendor
   Address
-  Gender
   Phone
   Email
-  CountryID <<FK>>
+  NationalityCountryID <<FK>>
   ImagePath
-}
-
-entity "Countries" as Countries {
-  * CountryID <<PK>>
-  --
-  CountryName
 }
 
 entity "Users" as Users {
@@ -53,7 +52,7 @@ entity "Drivers" as Drivers {
   --
   PersonID <<FK>>
   CreatedByUserID <<FK>>
-  CreateDate
+  CreatedDate
 }
 
 entity "ApplicationTypes" as ApplicationTypes {
@@ -66,12 +65,12 @@ entity "ApplicationTypes" as ApplicationTypes {
 entity "Applications" as Applications {
   * ApplicationID <<PK>>
   --
-  PersonID <<FK>>
+  ApplicantPersonID <<FK>>
+  ApplicationDate
   ApplicationTypeID <<FK>>
   ApplicationStatus
-  ApplicationDate
-  PaidFees
   LastStatusDate
+  PaidFees
   CreatedByUserID <<FK>>
 }
 
@@ -81,7 +80,7 @@ entity "LicenseClasses" as LicenseClasses {
   ClassName
   ClassDescription
   MinimumAllowedAge
-  ValidityLength
+  DefaultValidityLength
   ClassFees
 }
 
@@ -101,6 +100,8 @@ entity "Licenses" as Licenses {
   IssueDate
   ExpirationDate
   Notes
+  PaidFees
+  IsActive
   IssueReason
   CreatedByUserID <<FK>>
 }
@@ -120,7 +121,6 @@ entity "InternationalLicenses" as InternationalLicenses {
 entity "DetainedLicenses" as DetainedLicenses {
   * DetainID <<PK>>
   --
-  ReleaseApplicationID <<FK>>
   LicenseID <<FK>>
   DetainDate
   FineFees
@@ -128,12 +128,13 @@ entity "DetainedLicenses" as DetainedLicenses {
   IsReleased
   ReleaseDate
   ReleasedByUserID <<FK>>
+  ReleaseApplicationID <<FK>>
 }
 
 entity "TestTypes" as TestTypes {
   * TestTypeID <<PK>>
   --
-  TestTypeName
+  TestTypeTitle
   TestTypeDescription
   TestTypeFees
 }
@@ -158,43 +159,54 @@ entity "Tests" as Tests {
   CreatedByUserID <<FK>>
 }
 
-Countries ||--o{ People : "country has people"
-People ||--o| Users : "person may have user"
-People ||--o| Drivers : "person may be driver"
-People ||--o{ Applications : "person submits"
+' =======================
+' RELATIONSHIPS
+' =======================
 
-ApplicationTypes ||--o{ Applications : "type classifies"
-Applications ||--o| LDLApplications : "application may be local"
+Countries ||--o{ People : "has"
 
-LicenseClasses ||--o{ LDLApplications : "class requested"
-LicenseClasses ||--o{ Licenses : "class assigned"
-
-Drivers ||--o{ Licenses : "driver holds"
-Drivers ||--o{ InternationalLicenses : "driver holds"
-
-Applications ||--o{ Licenses : "application issues"
-Applications ||--o{ InternationalLicenses : "application issues"
-
-Licenses ||--o{ DetainedLicenses : "license detained"
-Licenses ||--o{ InternationalLicenses : "local basis"
-
-TestTypes ||--o{ TestAppointments : "test type"
-LDLApplications ||--o{ TestAppointments : "application schedules"
-TestAppointments ||--o{ Tests : "appointment records"
+People ||--o{ Users : "has account"
+People ||--o| Drivers : "may be driver"
+People ||--o{ Applications : "submits"
 
 Users ||--o{ Drivers : "creates"
 Users ||--o{ Applications : "creates"
+
 Users ||--o{ Licenses : "creates"
 Users ||--o{ InternationalLicenses : "creates"
-Users ||--o{ DetainedLicenses : "creates"
-Users ||--o{ Tests : "creates"
-Users ||--o{ TestAppointments : "creates"
 
-legend right
-  |= Symbol |= Meaning |
-  | || | exactly one |
-  | o| | zero or one |
-  | o{ | zero or many |
-endlegend
+Users ||--o{ TestAppointments : "creates"
+Users ||--o{ Tests : "creates"
+
+Users ||--o{ DetainedLicenses : "creates"
+Users ||--o{ DetainedLicenses : "releases"
+
+ApplicationTypes ||--o{ Applications : "classifies"
+
+Applications ||--o| LocalDrivingLicenseApplications : "specializes"
+
+LicenseClasses ||--o{ LocalDrivingLicenseApplications : "requested class"
+
+Applications ||--o{ Licenses : "issues"
+
+Applications ||--o{ InternationalLicenses : "issues"
+
+Applications ||--o{ DetainedLicenses : "release application"
+
+Drivers ||--|{ Licenses : "holds"
+
+LicenseClasses ||--o{ Licenses : "assigned class"
+
+Drivers ||--o{ InternationalLicenses : "holds"
+
+Licenses ||--o{ InternationalLicenses : "base license"
+
+Licenses ||--o{ DetainedLicenses : "may be detained"
+
+TestTypes ||--o{ TestAppointments : "defines type"
+
+LocalDrivingLicenseApplications ||--o{ TestAppointments : "schedules"
+
+TestAppointments ||--o{ Tests : "results"
 
 @enduml
