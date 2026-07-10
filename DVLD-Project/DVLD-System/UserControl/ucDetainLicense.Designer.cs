@@ -80,7 +80,6 @@
             this.picDetainID = new DevExpress.XtraEditors.PictureEdit();
             this.lblCreatedBy1 = new DevExpress.XtraEditors.LabelControl();
             this.lblCreatedBy = new DevExpress.XtraEditors.LabelControl();
-            this.lblFineFees1 = new DevExpress.XtraEditors.LabelControl();
             this.lblFineFees = new DevExpress.XtraEditors.LabelControl();
             this.lblDetainDate1 = new DevExpress.XtraEditors.LabelControl();
             this.lblDetainDate = new DevExpress.XtraEditors.LabelControl();
@@ -92,6 +91,7 @@
             this.lnkShowLicensesInfo = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.btnDetain = new DevExpress.XtraEditors.SimpleButton();
             this.btnClose = new DevExpress.XtraEditors.SimpleButton();
+            this.txtFineFees = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.grpDriverLicenseInfo)).BeginInit();
             this.grpDriverLicenseInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picDriverID.Properties)).BeginInit();
@@ -117,6 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picFineFees.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetainDate.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetainID.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFineFees.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // grpDriverLicenseInfo
@@ -161,8 +162,9 @@
             this.grpDriverLicenseInfo.Location = new System.Drawing.Point(16, 144);
             this.grpDriverLicenseInfo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpDriverLicenseInfo.Name = "grpDriverLicenseInfo";
-            this.grpDriverLicenseInfo.Size = new System.Drawing.Size(928, 336);
+            this.grpDriverLicenseInfo.Size = new System.Drawing.Size(896, 336);
             this.grpDriverLicenseInfo.TabIndex = 5;
+            this.grpDriverLicenseInfo.Text = "Driver License Info";
             // 
             // picDriverID
             // 
@@ -716,6 +718,7 @@
             // 
             // grpDetainInfo
             // 
+            this.grpDetainInfo.Controls.Add(this.txtFineFees);
             this.grpDetainInfo.Controls.Add(this.picCreatedBy);
             this.grpDetainInfo.Controls.Add(this.picLicenseID1);
             this.grpDetainInfo.Controls.Add(this.picFineFees);
@@ -723,7 +726,6 @@
             this.grpDetainInfo.Controls.Add(this.picDetainID);
             this.grpDetainInfo.Controls.Add(this.lblCreatedBy1);
             this.grpDetainInfo.Controls.Add(this.lblCreatedBy);
-            this.grpDetainInfo.Controls.Add(this.lblFineFees1);
             this.grpDetainInfo.Controls.Add(this.lblFineFees);
             this.grpDetainInfo.Controls.Add(this.lblDetainDate1);
             this.grpDetainInfo.Controls.Add(this.lblDetainDate);
@@ -733,7 +735,7 @@
             this.grpDetainInfo.Controls.Add(this.lblLicenseID2);
             this.grpDetainInfo.Location = new System.Drawing.Point(16, 488);
             this.grpDetainInfo.Name = "grpDetainInfo";
-            this.grpDetainInfo.Size = new System.Drawing.Size(592, 128);
+            this.grpDetainInfo.Size = new System.Drawing.Size(552, 128);
             this.grpDetainInfo.TabIndex = 50;
             this.grpDetainInfo.Text = "Detain Info";
             // 
@@ -836,20 +838,6 @@
             this.lblCreatedBy.Size = new System.Drawing.Size(83, 20);
             this.lblCreatedBy.TabIndex = 60;
             this.lblCreatedBy.Text = "Created By:";
-            // 
-            // lblFineFees1
-            // 
-            this.lblFineFees1.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFineFees1.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblFineFees1.Appearance.Options.UseFont = true;
-            this.lblFineFees1.Appearance.Options.UseForeColor = true;
-            this.lblFineFees1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
-            this.lblFineFees1.Location = new System.Drawing.Point(152, 96);
-            this.lblFineFees1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.lblFineFees1.Name = "lblFineFees1";
-            this.lblFineFees1.Size = new System.Drawing.Size(112, 20);
-            this.lblFineFees1.TabIndex = 59;
-            this.lblFineFees1.Text = "???";
             // 
             // lblFineFees
             // 
@@ -966,7 +954,7 @@
             this.btnDetain.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnDetain.AppearanceHovered.Options.UseForeColor = true;
             this.btnDetain.ImageOptions.Image = global::DVLD_System.Properties.Resources.icoInternational;
-            this.btnDetain.Location = new System.Drawing.Point(800, 576);
+            this.btnDetain.Location = new System.Drawing.Point(776, 576);
             this.btnDetain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDetain.Name = "btnDetain";
             this.btnDetain.Size = new System.Drawing.Size(120, 40);
@@ -982,12 +970,23 @@
             this.btnClose.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnClose.AppearanceHovered.Options.UseForeColor = true;
             this.btnClose.ImageOptions.Image = global::DVLD_System.Properties.Resources.icoClose;
-            this.btnClose.Location = new System.Drawing.Point(672, 576);
+            this.btnClose.Location = new System.Drawing.Point(648, 576);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 40);
             this.btnClose.TabIndex = 52;
             this.btnClose.Text = "Close";
+            // 
+            // txtFineFees
+            // 
+            this.txtFineFees.Location = new System.Drawing.Point(152, 96);
+            this.txtFineFees.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtFineFees.Name = "txtFineFees";
+            this.txtFineFees.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFineFees.Properties.Appearance.Options.UseFont = true;
+            this.txtFineFees.Properties.MaxLength = 20;
+            this.txtFineFees.Size = new System.Drawing.Size(120, 30);
+            this.txtFineFees.TabIndex = 54;
             // 
             // ucDetainLicense
             // 
@@ -1002,7 +1001,7 @@
             this.Controls.Add(this.lblDetainLicense);
             this.Controls.Add(this.grpDriverLicenseInfo);
             this.Name = "ucDetainLicense";
-            this.Size = new System.Drawing.Size(951, 658);
+            this.Size = new System.Drawing.Size(919, 658);
             ((System.ComponentModel.ISupportInitialize)(this.grpDriverLicenseInfo)).EndInit();
             this.grpDriverLicenseInfo.ResumeLayout(false);
             this.grpDriverLicenseInfo.PerformLayout();
@@ -1031,6 +1030,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picFineFees.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetainDate.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetainID.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFineFees.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1085,7 +1085,6 @@
         private DevExpress.XtraEditors.LabelControl lblLicenseID2;
         private DevExpress.XtraEditors.LabelControl lblCreatedBy1;
         private DevExpress.XtraEditors.LabelControl lblCreatedBy;
-        private DevExpress.XtraEditors.LabelControl lblFineFees1;
         private DevExpress.XtraEditors.LabelControl lblFineFees;
         private DevExpress.XtraEditors.LabelControl lblDetainDate1;
         private DevExpress.XtraEditors.LabelControl lblDetainDate;
@@ -1101,5 +1100,6 @@
         private DevExpress.XtraEditors.PictureEdit picLicenseID1;
         private DevExpress.XtraEditors.PictureEdit picFineFees;
         private DevExpress.XtraEditors.LabelControl lblNotes1;
+        private DevExpress.XtraEditors.TextEdit txtFineFees;
     }
 }

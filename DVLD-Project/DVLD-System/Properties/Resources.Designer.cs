@@ -363,6 +363,26 @@ namespace DVLD_System.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap imgLicenseView {
+            get {
+                object obj = ResourceManager.GetObject("imgLicenseView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap imgPersonLicenseHistory {
+            get {
+                object obj = ResourceManager.GetObject("imgPersonLicenseHistory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap imgScheduleTest {
             get {
                 object obj = ResourceManager.GetObject("imgScheduleTest", resourceCulture);

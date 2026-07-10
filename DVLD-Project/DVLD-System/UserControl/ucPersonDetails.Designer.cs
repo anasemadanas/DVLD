@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucPersonDetails));
-            this.grpAddPeople = new DevExpress.XtraEditors.GroupControl();
+            this.grpPersonDetail = new DevExpress.XtraEditors.GroupControl();
             this.lblCountry1 = new DevExpress.XtraEditors.LabelControl();
             this.lblPhone1 = new DevExpress.XtraEditors.LabelControl();
             this.lblDateOfBirth1 = new DevExpress.XtraEditors.LabelControl();
@@ -61,8 +61,8 @@
             this.lblNationalNo = new DevExpress.XtraEditors.LabelControl();
             this.lblName = new DevExpress.XtraEditors.LabelControl();
             this.lblPersonDetails = new DevExpress.XtraEditors.LabelControl();
-            ((System.ComponentModel.ISupportInitialize)(this.grpAddPeople)).BeginInit();
-            this.grpAddPeople.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpPersonDetail)).BeginInit();
+            this.grpPersonDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPersonID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCountry.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPhone.Properties)).BeginInit();
@@ -75,43 +75,46 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLoadImage.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // grpAddPeople
+            // grpPersonDetail
             // 
-            this.grpAddPeople.Controls.Add(this.lblCountry1);
-            this.grpAddPeople.Controls.Add(this.lblPhone1);
-            this.grpAddPeople.Controls.Add(this.lblDateOfBirth1);
-            this.grpAddPeople.Controls.Add(this.lblAddress1);
-            this.grpAddPeople.Controls.Add(this.lblEmail1);
-            this.grpAddPeople.Controls.Add(this.lblGendor1);
-            this.grpAddPeople.Controls.Add(this.lblNationalID1);
-            this.grpAddPeople.Controls.Add(this.lblPersonID1);
-            this.grpAddPeople.Controls.Add(this.picPersonID);
-            this.grpAddPeople.Controls.Add(this.LBLpERSONid);
-            this.grpAddPeople.Controls.Add(this.lblFullName);
-            this.grpAddPeople.Controls.Add(this.btnClose);
-            this.grpAddPeople.Controls.Add(this.lnkSetImage);
-            this.grpAddPeople.Controls.Add(this.picCountry);
-            this.grpAddPeople.Controls.Add(this.lblCountry);
-            this.grpAddPeople.Controls.Add(this.picPhone);
-            this.grpAddPeople.Controls.Add(this.lblPhone);
-            this.grpAddPeople.Controls.Add(this.picDateOfBirth);
-            this.grpAddPeople.Controls.Add(this.lblDateOfBirth);
-            this.grpAddPeople.Controls.Add(this.picGendor);
-            this.grpAddPeople.Controls.Add(this.picEmail);
-            this.grpAddPeople.Controls.Add(this.picAddress);
-            this.grpAddPeople.Controls.Add(this.picNationalNo);
-            this.grpAddPeople.Controls.Add(this.picName);
-            this.grpAddPeople.Controls.Add(this.picLoadImage);
-            this.grpAddPeople.Controls.Add(this.lblAddress);
-            this.grpAddPeople.Controls.Add(this.lblEmail);
-            this.grpAddPeople.Controls.Add(this.lblGendor);
-            this.grpAddPeople.Controls.Add(this.lblNationalNo);
-            this.grpAddPeople.Controls.Add(this.lblName);
-            this.grpAddPeople.Location = new System.Drawing.Point(8, 56);
-            this.grpAddPeople.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpAddPeople.Name = "grpAddPeople";
-            this.grpAddPeople.Size = new System.Drawing.Size(960, 392);
-            this.grpAddPeople.TabIndex = 2;
+            this.grpPersonDetail.AppearanceCaption.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpPersonDetail.AppearanceCaption.Options.UseFont = true;
+            this.grpPersonDetail.Controls.Add(this.lblCountry1);
+            this.grpPersonDetail.Controls.Add(this.lblPhone1);
+            this.grpPersonDetail.Controls.Add(this.lblDateOfBirth1);
+            this.grpPersonDetail.Controls.Add(this.lblAddress1);
+            this.grpPersonDetail.Controls.Add(this.lblEmail1);
+            this.grpPersonDetail.Controls.Add(this.lblGendor1);
+            this.grpPersonDetail.Controls.Add(this.lblNationalID1);
+            this.grpPersonDetail.Controls.Add(this.lblPersonID1);
+            this.grpPersonDetail.Controls.Add(this.picPersonID);
+            this.grpPersonDetail.Controls.Add(this.LBLpERSONid);
+            this.grpPersonDetail.Controls.Add(this.lblFullName);
+            this.grpPersonDetail.Controls.Add(this.btnClose);
+            this.grpPersonDetail.Controls.Add(this.lnkSetImage);
+            this.grpPersonDetail.Controls.Add(this.picCountry);
+            this.grpPersonDetail.Controls.Add(this.lblCountry);
+            this.grpPersonDetail.Controls.Add(this.picPhone);
+            this.grpPersonDetail.Controls.Add(this.lblPhone);
+            this.grpPersonDetail.Controls.Add(this.picDateOfBirth);
+            this.grpPersonDetail.Controls.Add(this.lblDateOfBirth);
+            this.grpPersonDetail.Controls.Add(this.picGendor);
+            this.grpPersonDetail.Controls.Add(this.picEmail);
+            this.grpPersonDetail.Controls.Add(this.picAddress);
+            this.grpPersonDetail.Controls.Add(this.picNationalNo);
+            this.grpPersonDetail.Controls.Add(this.picName);
+            this.grpPersonDetail.Controls.Add(this.picLoadImage);
+            this.grpPersonDetail.Controls.Add(this.lblAddress);
+            this.grpPersonDetail.Controls.Add(this.lblEmail);
+            this.grpPersonDetail.Controls.Add(this.lblGendor);
+            this.grpPersonDetail.Controls.Add(this.lblNationalNo);
+            this.grpPersonDetail.Controls.Add(this.lblName);
+            this.grpPersonDetail.Location = new System.Drawing.Point(8, 56);
+            this.grpPersonDetail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grpPersonDetail.Name = "grpPersonDetail";
+            this.grpPersonDetail.Size = new System.Drawing.Size(960, 392);
+            this.grpPersonDetail.TabIndex = 2;
+            this.grpPersonDetail.Text = "Person Details";
             // 
             // lblCountry1
             // 
@@ -273,7 +276,7 @@
             this.btnClose.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnClose.AppearanceHovered.Options.UseForeColor = true;
             this.btnClose.ImageOptions.Image = global::DVLD_System.Properties.Resources.icoClose;
-            this.btnClose.Location = new System.Drawing.Point(792, 328);
+            this.btnClose.Location = new System.Drawing.Point(784, 320);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(144, 49);
@@ -532,12 +535,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblPersonDetails);
-            this.Controls.Add(this.grpAddPeople);
+            this.Controls.Add(this.grpPersonDetail);
             this.Name = "ucPersonDetails";
             this.Size = new System.Drawing.Size(978, 457);
-            ((System.ComponentModel.ISupportInitialize)(this.grpAddPeople)).EndInit();
-            this.grpAddPeople.ResumeLayout(false);
-            this.grpAddPeople.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grpPersonDetail)).EndInit();
+            this.grpPersonDetail.ResumeLayout(false);
+            this.grpPersonDetail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPersonID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCountry.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPhone.Properties)).EndInit();
@@ -555,7 +558,7 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.GroupControl grpAddPeople;
+        private DevExpress.XtraEditors.GroupControl grpPersonDetail;
         private DevExpress.XtraEditors.SimpleButton btnClose;
         private DevExpress.XtraEditors.HyperlinkLabelControl lnkSetImage;
         private DevExpress.XtraEditors.PictureEdit picCountry;

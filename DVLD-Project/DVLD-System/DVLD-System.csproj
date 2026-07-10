@@ -149,6 +149,12 @@
     <Compile Include="frmLoginScreen.Designer.cs">
       <DependentUpon>frmLoginScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\LicenseHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\LicenseHistory.Designer.cs">
+      <DependentUpon>LicenseHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\ucAddNewUsers.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,6 +178,18 @@
     </Compile>
     <Compile Include="UserControl\ucDetainLicense.Designer.cs">
       <DependentUpon>ucDetainLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucDriverInternationalLicenseInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucDriverInternationalLicenseInfo.Designer.cs">
+      <DependentUpon>ucDriverInternationalLicenseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucInternationalLicenseApplication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucInternationalLicenseApplication.Designer.cs">
+      <DependentUpon>ucInternationalLicenseApplication.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControl\ucIssueDriverLicenseForTheFirstTime.cs">
       <SubType>UserControl</SubType>
@@ -211,6 +229,18 @@
     </Compile>
     <Compile Include="UserControl\ucPersonDetails.Designer.cs">
       <DependentUpon>ucPersonDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucRenewLicenseApplication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucRenewLicenseApplication.Designer.cs">
+      <DependentUpon>ucRenewLicenseApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ucReplacementForDamagedOrLostLicense.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl\ucReplacementForDamagedOrLostLicense.Designer.cs">
+      <DependentUpon>ucReplacementForDamagedOrLostLicense.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControl\ucWrittenTest.cs">
       <SubType>UserControl</SubType>
@@ -255,6 +285,9 @@
     <EmbeddedResource Include="frmLoginScreen.resx">
       <DependentUpon>frmLoginScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\LicenseHistory.resx">
+      <DependentUpon>LicenseHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControl\ucAddNewUsers.resx">
       <DependentUpon>ucAddNewUsers.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,6 +299,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\ucDetainLicense.resx">
       <DependentUpon>ucDetainLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucDriverInternationalLicenseInfo.resx">
+      <DependentUpon>ucDriverInternationalLicenseInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucInternationalLicenseApplication.resx">
+      <DependentUpon>ucInternationalLicenseApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\ucIssueDriverLicenseForTheFirstTime.resx">
       <DependentUpon>ucIssueDriverLicenseForTheFirstTime.cs</DependentUpon>
@@ -287,6 +326,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\ucPersonDetails.resx">
       <DependentUpon>ucPersonDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucRenewLicenseApplication.resx">
+      <DependentUpon>ucRenewLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl\ucReplacementForDamagedOrLostLicense.resx">
+      <DependentUpon>ucReplacementForDamagedOrLostLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControl\ucWrittenTest.resx">
       <DependentUpon>ucWrittenTest.cs</DependentUpon>
@@ -442,6 +487,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\imgScheduleTest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgLicenseView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgPersonLicenseHistory.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
